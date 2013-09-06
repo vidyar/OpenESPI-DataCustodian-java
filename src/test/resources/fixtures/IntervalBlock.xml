@@ -50,6 +50,13 @@
                     <!-- start date: 3/1/2012 5:00:00 AM -->
                 </interval>
             </IntervalBlock>
+            <IntervalBlock xmlns="http://naesb.org/espi">
+                <interval>
+                    <duration>86400</duration>
+                    <start>1330664400</start>
+                    <!-- start date: 3/1/2012 5:00:00 AM -->
+                </interval>
+            </IntervalBlock>
         </content>
         <published>2012-10-24T00:00:00Z</published>
         <updated>2012-10-24T00:00:00Z</updated>

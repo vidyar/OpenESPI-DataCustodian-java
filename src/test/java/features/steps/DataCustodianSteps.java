@@ -131,7 +131,8 @@ public class DataCustodianSteps {
 
     @Then("^I should see my Meter Reading with Interval Blocks$")
     public void I_should_see_my_Meter_Reading_with_Interval_Blocks() throws Throwable {
-        assertNotNull("86400", driver.getPageSource());
+        assertTrue(driver.getPageSource().contains("1330664400"));
+        assertTrue(driver.getPageSource().contains("1330578000"));
     }
 
     @Given("^a logged in as Retail Customer with Usage Points$")
