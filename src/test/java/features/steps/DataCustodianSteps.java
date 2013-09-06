@@ -21,6 +21,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.runtime.PendingException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -95,6 +96,11 @@ public class DataCustodianSteps {
         StepUtils.uploadUsagePoints("/fixtures/IntervalBlock.xml");
     }
 
+    @When("^I upload Usage Points with Electric Power Usage Summaries")
+    public void I_upload_Usage_Points_with_Electric_Power_Usage_Summaries() throws Throwable {
+        StepUtils.uploadUsagePoints("/fixtures/15minLP_15Days.xml");
+    }
+
     @When("^I login as Alan Turing$")
     public void I_login_as_Alan_Turing() throws Throwable {
         StepUtils.login("alan", "koala");
@@ -156,5 +162,25 @@ public class DataCustodianSteps {
     @Then("^I should see the new Retail Customer in the customer list$")
     public void I_should_see_the_new_Retail_Customer_in_the_customer_list() throws Throwable {
         assertTrue(driver.getPageSource().contains(username));
+    }
+
+    @And("^I select Electric Power Usage Summary$")
+    public void I_select_Electric_Power_Usage_Summary() throws Throwable {
+        WebElement electricPowerUsageSummaryLink = driver.findElement(By.linkText("Usage Summary"));
+        electricPowerUsageSummaryLink.click();
+    }
+
+    @Then("^I should see my Electric Power Usage Summaries$")
+    public void I_should_see_my_Electric_Power_Usage_Summaries() throws Throwable {
+        assertTrue(driver.getPageSource().contains("1119600"));
+        assertTrue(driver.getPageSource().contains("1330578000"));
+        assertTrue(driver.getPageSource().contains("15303000"));
+        assertTrue(driver.getPageSource().contains("1135000"));
+        assertTrue(driver.getPageSource().contains("1346000"));
+        assertTrue(driver.getPageSource().contains("840"));
+        assertTrue(driver.getPageSource().contains("72"));
+        assertTrue(driver.getPageSource().contains("1304716"));
+        assertTrue(driver.getPageSource().contains("93018"));
+        assertTrue(driver.getPageSource().contains("1331784000"));
     }
 }
