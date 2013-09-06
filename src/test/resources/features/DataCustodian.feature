@@ -64,7 +64,7 @@ Feature: Data Custodian
 
     When I login as Alan Turing
     And I navigate to the Usage Points list
-    Then I should see my Usage Points with title "Electric meter"
+    Then I should see my Usage Points with title "Front Electric Meter"
 
   Scenario: Data Custodian uploads Usage Points with Service Categories
     Given Grace Hopper Data Custodian
