@@ -270,6 +270,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     </bean>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="10000000"/>
+        <property name="maxUploadSize" value="3000000000"/>
     </bean>
 </beans>
