@@ -181,7 +181,7 @@ public class BigDataMaker {
         meterReading.setMRID("E8B19EF0-6833-41CE-A28B-A5E7F9F193AE");
         meterReading.setDescription("Electricity consumption");
 
-        for (int i=0; i < 100; i++) {
+        for (int i=0; i < 100000; i++) {
             meterReading.addIntervalBlock(_intervalBlock());
         }
         meterReading.setReadingType(_readingType());
