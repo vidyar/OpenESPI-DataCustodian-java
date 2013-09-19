@@ -18,6 +18,7 @@ package org.energyos.espi.datacustodian.console;
 
 import com.sun.syndication.feed.atom.Feed;
 import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.WireFeedOutput;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -74,6 +75,8 @@ public class BigDataMaker {
 
         FeedBuilder feedBuilder = new FeedBuilder();
 
+        // TODO: Change feedBuilder to take an existing feed and append entries so that we don't have to instantiate
+        // all the usage points up front which kills the GC.
         List<UsagePoint> usagePoints = new ArrayList<>();
         for (int i = 0; i < numUsagePoints; i++ ) {
             usagePoints.add(newUsagePoint());
@@ -86,15 +89,15 @@ public class BigDataMaker {
         System.out.println("Built feed.\n" + now() + "\n\nMarshalling feed...\n\n");
 
         ATOMMarshaller marshaller = new ATOMMarshaller();
-        String feedXML = marshaller.marshal(feed);
+        new WireFeedOutput().output(feed, file);
 
-        System.out.println("Marshalled feed.\n" + now() + "\n\nWriting feed...\n\n");
-//        System.out.println(feedXML);
-
-        FileWriter fw = new FileWriter(file.getAbsoluteFile());
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(feedXML);
-        bw.close();
+//        System.out.println("Marshalled feed.\n" + now() + "\n\nWriting feed...\n\n");
+////        System.out.println(feedXML);
+//
+//        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+//        BufferedWriter bw = new BufferedWriter(fw);
+//        bw.write(feedXML);
+//        bw.close();
 
 
 
