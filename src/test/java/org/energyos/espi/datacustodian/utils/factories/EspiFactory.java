@@ -4,34 +4,18 @@ import org.energyos.espi.datacustodian.domain.*;
 
 import java.math.BigInteger;
 import java.util.GregorianCalendar;
+import java.util.UUID;
 
 public class EspiFactory {
 
     public static UsagePoint newUsagePoint() {
-        return _usagePoint();
+       return newUsagePoint(newRetailCustomer());
     }
 
-    public static MeterReading newMeterReading() {
-        return _usagePoint().getMeterReadings().get(0);
-    }
-
-    public static ReadingType newReadingType() {
-        return _readingType();
-    }
-
-    public static ElectricPowerUsageSummary newElectricPowerUsageSummary() {
-        return _usagePoint().getElectricPowerUsageSummaries().get(0);
-    }
-
-    public static IntervalBlock newIntervalBlock() {
-        return _usagePoint().getMeterReadings().get(0).getIntervalBlocks().get(0);
-    }
-
-    private static UsagePoint _usagePoint() {
+    public static UsagePoint newUsagePoint(RetailCustomer retailCustomer) {
         UsagePoint usagePoint = new UsagePoint();
 
-        usagePoint.setId(99L);
-        usagePoint.setMRID("7BC41774-7190-4864-841C-861AC76D46C2");
+        usagePoint.setMRID("urn:uuid:" + UUID.randomUUID());
         usagePoint.setDescription("Electric meter");
 
         ServiceCategory serviceCategory = new ServiceCategory();
@@ -39,40 +23,51 @@ public class EspiFactory {
 
         usagePoint.setServiceCategory(serviceCategory);
 
-        usagePoint.setRetailCustomer(_retailCustomer());
-        usagePoint.addMeterReading(_meterReading());
-        usagePoint.addElectricPowerUsageSummary(_electricPowerUsageSummary());
+        usagePoint.setRetailCustomer(retailCustomer);
+        usagePoint.addMeterReading(newMeterReading());
+        usagePoint.addElectricPowerUsageSummary(newElectricPowerUsageSummary());
 
         return usagePoint;
     }
 
-    private static RetailCustomer _retailCustomer() {
+    public static MeterReading newMeterReadingWithUsagePoint() {
+        return newUsagePoint().getMeterReadings().get(0);
+    }
+
+    public static ElectricPowerUsageSummary newElectricPowerUsageSummaryWithUsagePoint() {
+        return newUsagePoint().getElectricPowerUsageSummaries().get(0);
+    }
+
+    public static IntervalBlock newIntervalBlockWithUsagePoint() {
+        return newUsagePoint().getMeterReadings().get(0).getIntervalBlocks().get(0);
+    }
+
+    public static RetailCustomer newRetailCustomer() {
         RetailCustomer retailCustomer = new RetailCustomer();
-        retailCustomer.setId(88L);
+        retailCustomer.setFirstName("First" + System.currentTimeMillis());
+        retailCustomer.setLastName("Last" + System.currentTimeMillis());
 
         return retailCustomer;
     }
 
-    private static MeterReading _meterReading() {
+    private static MeterReading newMeterReading() {
         MeterReading meterReading = new MeterReading();
 
-        meterReading.setId(98L);
         meterReading.setMRID("E8B19EF0-6833-41CE-A28B-A5E7F9F193AE");
         meterReading.setDescription("Electricity consumption");
 
-        meterReading.addIntervalBlock(_intervalBlock());
-        meterReading.addIntervalBlock(_intervalBlock());
-        meterReading.addIntervalBlock(_intervalBlock());
+        meterReading.addIntervalBlock(newIntervalBlock());
+        meterReading.addIntervalBlock(newIntervalBlock());
+        meterReading.addIntervalBlock(newIntervalBlock());
 
-        meterReading.setReadingType(_readingType());
+        meterReading.setReadingType(newReadingType());
 
         return meterReading;
     }
 
-    private static ReadingType _readingType() {
+    public static ReadingType newReadingType() {
         ReadingType readingType = new ReadingType();
 
-        readingType.setId(96L);
         readingType.setDescription("Energy Delivered (kWh)");
         readingType.setMRID("82B3E74B-DFC0-4DD4-8651-91A67B40374D");
 
@@ -101,24 +96,22 @@ public class EspiFactory {
         return readingType;
     }
 
-    private static IntervalBlock _intervalBlock() {
+    private static IntervalBlock newIntervalBlock() {
         IntervalBlock intervalBlock = new IntervalBlock();
 
         DateTimeInterval interval = new DateTimeInterval();
         interval.setDuration(new Long(86400));
         interval.setStart(new Long(1330578000));
 
-        intervalBlock.setId(97L);
         intervalBlock.setMRID("E8E75691-7F9D-49F3-8BE2-3A74EBF6BFC0");
         intervalBlock.setInterval(interval);
 
         return intervalBlock;
     }
 
-    private static ElectricPowerUsageSummary _electricPowerUsageSummary() {
+    private static ElectricPowerUsageSummary newElectricPowerUsageSummary() {
         ElectricPowerUsageSummary summary = new ElectricPowerUsageSummary();
 
-        summary.setId(1L);
         summary.setMRID("DEB0A337-B1B5-4658-99CA-4688E253A99B");
         summary.setDescription("Usage Summary");
         summary.setBillingPeriod(new DateTimeInterval(1119600L, 1119600L));

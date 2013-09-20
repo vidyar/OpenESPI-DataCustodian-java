@@ -15,7 +15,7 @@ import java.io.StringWriter;
 
 import static org.energyos.espi.datacustodian.Asserts.assertXpathValue;
 import static org.energyos.espi.datacustodian.support.TestUtils.assertAnnotationPresent;
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newIntervalBlock;
+import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newIntervalBlockWithUsagePoint;
 
 public class IntervalBlockTests extends XMLTest {
 
@@ -26,7 +26,7 @@ public class IntervalBlockTests extends XMLTest {
         Marshaller marshaller = JAXBContext.newInstance(IntervalBlock.class).createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
         StringWriter stringWriter = new StringWriter();
-        marshaller.marshal(newIntervalBlock(), stringWriter);
+        marshaller.marshal(newIntervalBlockWithUsagePoint(), stringWriter);
 
         xml = stringWriter.toString();
     }

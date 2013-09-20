@@ -18,8 +18,6 @@ package org.energyos.espi.datacustodian.domain;
 
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.atom.XMLTest;
-import org.energyos.espi.datacustodian.domain.ElectricPowerUsageSummary;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -33,7 +31,7 @@ import java.io.StringWriter;
 
 import static org.energyos.espi.datacustodian.Asserts.assertXpathValue;
 import static org.energyos.espi.datacustodian.support.TestUtils.assertAnnotationPresent;
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newElectricPowerUsageSummary;
+import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newElectricPowerUsageSummaryWithUsagePoint;
 
 public class ElectricPowerUsageSummaryTests extends XMLTest {
 
@@ -44,7 +42,7 @@ public class ElectricPowerUsageSummaryTests extends XMLTest {
         Marshaller marshaller = JAXBContext.newInstance(ElectricPowerUsageSummary.class).createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
         StringWriter stringWriter = new StringWriter();
-        marshaller.marshal(newElectricPowerUsageSummary(), stringWriter);
+        marshaller.marshal(newElectricPowerUsageSummaryWithUsagePoint(), stringWriter);
 
         xml = stringWriter.toString();
     }
