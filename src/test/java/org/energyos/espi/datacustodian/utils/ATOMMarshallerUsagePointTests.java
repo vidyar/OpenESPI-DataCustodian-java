@@ -31,7 +31,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.oxm.UnmarshallingFailureException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -45,6 +44,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
@@ -76,12 +76,12 @@ public class ATOMMarshallerUsagePointTests {
     public void setup() throws Exception {
         XMLUnit.getControlDocumentBuilderFactory().setNamespaceAware(false);
 
-        ClassPathResource sourceFile = new ClassPathResource("/fixtures/15minLP_15Days.xml");
         FeedBuilder builder = new FeedBuilder();
         retailCustomer = new RetailCustomer();
         retailCustomer.setId(3L);
+        UUID uuid = UUID.randomUUID();
 
-        usagePointService.importUsagePoints(retailCustomer, sourceFile.getInputStream());
+        TestUtils.importUsagePoint(usagePointService, retailCustomer, uuid);
         List<UsagePoint> usagePoints = usagePointService.findAllByRetailCustomer(retailCustomer);
         usagePoint = usagePoints.get(0);
 
@@ -253,7 +253,7 @@ public class ATOMMarshallerUsagePointTests {
 
     @Test
     public void marshal_returnsEntryWithId() throws SAXException, IOException, XpathException {
-        assertXpathEvaluatesTo("urn:uuid:" + usagePoint.getMRID().toString(), "/feed/entry/id", xmlResult);
+        assertXpathEvaluatesTo(usagePoint.getMRID(), "/feed/entry/id", xmlResult);
     }
 
     @Test

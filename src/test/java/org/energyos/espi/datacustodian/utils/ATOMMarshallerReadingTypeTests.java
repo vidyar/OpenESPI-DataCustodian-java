@@ -38,6 +38,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 import static junit.framework.Assert.assertNotNull;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
@@ -72,8 +73,9 @@ public class ATOMMarshallerReadingTypeTests {
         FeedBuilder builder = new FeedBuilder();
         RetailCustomer customer = new RetailCustomer();
         customer.setId(5L);
+        UUID uuid = UUID.randomUUID();
 
-        usagePointService.importUsagePoints(customer, sourceFile.getInputStream());
+        TestUtils.importUsagePoint(usagePointService, customer, uuid);
         List<UsagePoint> usagePoints = usagePointService.findAllByRetailCustomer(customer);
         MeterReading meterReading = usagePoints.get(0).getMeterReadings().get(0);
         readingType = meterReading.getReadingType();
@@ -129,7 +131,7 @@ public class ATOMMarshallerReadingTypeTests {
 
     @Test
     public void marshal_returnsEntryWithId() throws SAXException, IOException, XpathException {
-        assertXpathEvaluatesTo("urn:uuid:" + readingType.getMRID().toString(), "//entry[3]/id", xmlResult);
+        assertXpathEvaluatesTo(readingType.getMRID(), "//entry[3]/id", xmlResult);
     }
 
     @Test

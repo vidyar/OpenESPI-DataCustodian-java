@@ -40,6 +40,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
@@ -74,8 +75,9 @@ public class ATOMMarshallerMeterReadingTests {
         FeedBuilder builder = new FeedBuilder();
         RetailCustomer customer = new RetailCustomer();
         customer.setId(5L);
+        UUID uuid = UUID.randomUUID();
 
-        usagePointService.importUsagePoints(customer, sourceFile.getInputStream());
+        TestUtils.importUsagePoint(usagePointService, customer, uuid);
         List<UsagePoint> usagePoints = usagePointService.findAllByRetailCustomer(customer);
         meterReading = usagePoints.get(0).getMeterReadings().get(0);
 
@@ -114,7 +116,7 @@ public class ATOMMarshallerMeterReadingTests {
 
     @Test
     public void marshal_returnsEntryWithId() throws SAXException, IOException, XpathException {
-        assertXpathEvaluatesTo("urn:uuid:" + meterReading.getMRID().toString(), "//entry[2]/id", xmlResult);
+        assertXpathEvaluatesTo(meterReading.getMRID(), "//entry[2]/id", xmlResult);
     }
 
     @Test
