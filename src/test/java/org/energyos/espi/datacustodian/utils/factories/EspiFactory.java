@@ -14,10 +14,7 @@ public class EspiFactory {
         usagePoint.setUUID(uuid);
         usagePoint.setDescription("Electric meter");
 
-        ServiceCategory serviceCategory = new ServiceCategory();
-        serviceCategory.setKind(new Long(0L));
-
-        usagePoint.setServiceCategory(serviceCategory);
+        usagePoint.setServiceCategory(new ServiceCategory(ServiceCategory.ELECTRICITY_SERVICE));
 
         return usagePoint;
     }
@@ -29,13 +26,10 @@ public class EspiFactory {
     public static UsagePoint newUsagePoint(RetailCustomer retailCustomer) {
         UsagePoint usagePoint = new UsagePoint();
 
-        usagePoint.setMRID("urn:uuid:" + UUID.randomUUID());
+        usagePoint.setUUID(UUID.randomUUID());
         usagePoint.setDescription("Electric meter");
 
-        ServiceCategory serviceCategory = new ServiceCategory();
-        serviceCategory.setKind(new Long(0L));
-
-        usagePoint.setServiceCategory(serviceCategory);
+        usagePoint.setServiceCategory(new ServiceCategory(ServiceCategory.ELECTRICITY_SERVICE));
 
         usagePoint.setRetailCustomer(retailCustomer);
         usagePoint.addMeterReading(newMeterReading());
@@ -114,8 +108,8 @@ public class EspiFactory {
         IntervalBlock intervalBlock = new IntervalBlock();
 
         DateTimeInterval interval = new DateTimeInterval();
-        interval.setDuration(new Long(86400));
-        interval.setStart(new Long(1330578000));
+        interval.setDuration(86400L);
+        interval.setStart(1330578000L);
 
         intervalBlock.setMRID("E8E75691-7F9D-49F3-8BE2-3A74EBF6BFC0");
         intervalBlock.setInterval(interval);
