@@ -24,14 +24,13 @@
 
 package org.energyos.espi.datacustodian.domain;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.*;
 import java.util.Date;
+import java.util.UUID;
 
 
 /**
@@ -77,11 +76,13 @@ public class IdentifiedObject
     extends Resource
 {
     @XmlElement(name = "mRID")
-    @NotEmpty
     protected String mrid;
 
     @XmlTransient
     protected String description;
+
+    @XmlTransient
+    protected String uuid;
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @XmlTransient
@@ -109,7 +110,9 @@ public class IdentifiedObject
      *     
      */
     public String getMRID() {
-        return mrid;
+        if (uuid == null)
+            return null;
+        return "urn:uuid:" + uuid;
     }
 
     /**
@@ -121,7 +124,7 @@ public class IdentifiedObject
      *     
      */
     public void setMRID(String value) {
-        this.mrid = value;
+        this.uuid = value.replace("urn:uuid:", "").toUpperCase();
     }
 
     /**
@@ -162,5 +165,15 @@ public class IdentifiedObject
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid.toString().toUpperCase();
+    }
+
+    public UUID getUUID() {
+        if (uuid != null)
+            return UUID.fromString(uuid);
+        return null;
     }
 }
