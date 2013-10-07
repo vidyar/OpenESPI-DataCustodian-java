@@ -23,6 +23,8 @@ import com.sun.syndication.io.FeedException;
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
+import org.energyos.espi.datacustodian.models.atom.ContentType;
+import org.energyos.espi.datacustodian.models.atom.LinkType;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -54,16 +56,16 @@ public class EspiEntryTests extends XMLTest {
         assertNotNull("entry was null", entry);
 
         assertEquals("Electric Meter", entry.getTitle());
-        assertEquals("Invalid entry id", "urn:uuid:E8E75691-7F9D-49F3-8BE2-3A74EBF6BFC0", entry.getId());
+        assertEquals("Invalid entry id", "urn:uuid:E8E75691-7F9D-49F3-8BE2-3A74EBF6BFC0", entry.getId().getValue());
         assertNotNull("Published is null", entry.getPublished());
         assertNotNull("Updated is null", entry.getUpdated());
-        assertTrue(entry.getOtherLinks().contains(entry.getSelfLink()));
-        assertTrue(entry.getOtherLinks().contains(entry.getUpLink()));
+        assertTrue(entry.getLinks().contains(entry.getSelfLink()));
+        assertTrue(entry.getLinks().contains(entry.getUpLink()));
         assertEquals("self", entry.getSelfLink().getRel());
         assertEquals("up", entry.getUpLink().getRel());
 
-        Content content = (Content)entry.getContents().get(0);
-        assertXpathExists("UsagePoint", content.getValue());
+        ContentType content = (ContentType)entry.getContent();
+        assertNotNull(content.getUsagePoint());
     }
 
     @Test
@@ -74,7 +76,7 @@ public class EspiEntryTests extends XMLTest {
     }
 
     private boolean containsRelatedLink(String href) {
-        for (Link link : entry.getRelatedLinks()) {
+        for (LinkType link : entry.getRelatedLinks()) {
             if (link.getHref() == href) {
                 return true;
             }

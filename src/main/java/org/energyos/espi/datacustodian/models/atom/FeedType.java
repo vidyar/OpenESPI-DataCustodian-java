@@ -24,6 +24,9 @@
 
 package org.energyos.espi.datacustodian.models.atom;
 
+import org.energyos.espi.datacustodian.atom.EspiEntry;
+import org.energyos.espi.datacustodian.atom.UsagePointEntry;
+import org.energyos.espi.datacustodian.models.atom.adapters.DateTimeAdapter;
 import org.energyos.espi.datacustodian.models.atom.adapters.EntryAdapter;
 import org.energyos.espi.datacustodian.models.atom.adapters.GenericAdapter;
 
@@ -76,11 +79,15 @@ import java.util.Map;
  * 
  * 
  */
+@XmlRootElement(name = "feed")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "feedType", propOrder = {
         "entries",
         "id",
-        "authorOrCategoryOrContributor"
+        "authorOrCategoryOrContributor",
+        "updated",
+        "links",
+        "espiEntries"
 })
 public class FeedType {
 
@@ -89,7 +96,9 @@ public class FeedType {
     })
     @XmlAnyElement(lax = true)
     @XmlJavaTypeAdapter(EntryAdapter.class)
-    protected List<EntryType> entries = new ArrayList<EntryType>();
+    protected List<EntryType> entries = new ArrayList<>();
+
+    protected List<EspiEntry<?>> espiEntries = new ArrayList<>();
 
     @XmlElementRefs({
             @XmlElementRef(name = "id", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
@@ -105,16 +114,36 @@ public class FeedType {
         @XmlElementRef(name = "generator", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "category", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "author", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "title", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "updated", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "id", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "entry", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "link", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "icon", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
         @XmlElementRef(name = "contributor", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false)
     })
     @XmlAnyElement(lax = true)
     protected List<Object> authorOrCategoryOrContributor;
+
+    @XmlElementRefs({
+            @XmlElementRef(name = "link", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
+    })
+    protected List<LinkType> links = new ArrayList<>();
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @XmlAttribute(name = "title", namespace = "http://www.w3.org/2005/Atom")
+    protected String title;
+
+    @XmlElementRefs({
+            @XmlElementRef(name = "updated", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false)
+    })
+    @XmlAnyElement(lax = true)
+    protected DateTimeType updated;
 
     @XmlAttribute(name = "base", namespace = "http://www.w3.org/XML/1998/namespace")
     @XmlSchemaType(name = "anyURI")
@@ -249,5 +278,38 @@ public class FeedType {
      */
     public Map<QName, String> getOtherAttributes() {
         return otherAttributes;
+    }
+
+    public void addEspiEntry(EspiEntry<?> entry) {
+        this.getEspiEntries().add(entry);
+    }
+
+    public DateTimeType getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(DateTimeType updated) {
+        this.updated = updated;
+    }
+
+    public List<LinkType> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<LinkType> links) {
+        this.links = links;
+    }
+
+    public List<EspiEntry<?>> getEspiEntries() {
+        return espiEntries;
+    }
+
+    public void setEspiEntries(List<EspiEntry<?>> espiEntries) {
+        this.espiEntries = espiEntries;
+    }
+
+
+    public void addEntry(EspiEntry<?> entry) {
+        this.getEspiEntries().add(entry);
     }
 }

@@ -65,6 +65,7 @@ import java.util.Map;
 @XmlType(name = "linkType", propOrder = {
     "content"
 })
+@XmlRootElement(name = "link")
 public class LinkType {
 
     @XmlValue

@@ -114,6 +114,7 @@ public class ATOMMarshallerTests {
     public void marshal_usagePointContent() throws FeedException, SAXException, IOException, XpathException {
         String xmlResult = marshaller.marshal(newFeed());
 
+        System.out.println(xmlResult);
         assertXpathExists("/feed/entry[1]/content/UsagePoint", xmlResult);
     }
 

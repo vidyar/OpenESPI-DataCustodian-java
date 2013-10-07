@@ -5,6 +5,7 @@ import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.domain.IntervalBlock;
 import org.energyos.espi.datacustodian.domain.MeterReading;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
+import org.energyos.espi.datacustodian.models.atom.ContentType;
 import org.energyos.espi.datacustodian.utils.EspiMarshaller;
 
 import java.util.ArrayList;
@@ -16,23 +17,15 @@ public class IntervalBlocksEntry extends EspiEntry<IntervalBlock> {
     public IntervalBlocksEntry(List<IntervalBlock> intervalBlocks) throws FeedException {
         super(intervalBlocks.get(0));
 
-        this.setContents(buildContents(intervalBlocks));
+        this.setContent(buildContents(intervalBlocks));
     }
 
-    private List<Content> buildContents(List<IntervalBlock> intervalBlocks) throws FeedException {
-        Content content = new Content();
-        List<Content> contents = new ArrayList<>();
-        StringBuilder intervalBlocksXml = new StringBuilder(40);
+    private ContentType buildContents(List<IntervalBlock> intervalBlocks) throws FeedException {
+        ContentType content = new ContentType();
 
-        for (IntervalBlock intervalBlock : intervalBlocks) {
-            intervalBlocksXml.append(EspiMarshaller.marshal(intervalBlock));
-            intervalBlocksXml.append("\n");
-        }
+        content.setEntity(intervalBlocks);
 
-        content.setValue(intervalBlocksXml.toString());
-        contents.add(content);
-
-        return contents;
+        return content;
     }
 
     protected String getSelfHref() {

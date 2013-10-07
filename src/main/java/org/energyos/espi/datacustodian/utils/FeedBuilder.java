@@ -23,6 +23,8 @@ import org.energyos.espi.datacustodian.domain.ElectricPowerQualitySummary;
 import org.energyos.espi.datacustodian.domain.ElectricPowerUsageSummary;
 import org.energyos.espi.datacustodian.domain.MeterReading;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
+import org.energyos.espi.datacustodian.models.atom.FeedType;
+import org.energyos.espi.datacustodian.models.atom.IdType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,11 +34,13 @@ import java.util.UUID;
 public class FeedBuilder {
 
     @SuppressWarnings("unchecked")
-    public Feed buildFeed(List<UsagePoint> usagePointList) throws FeedException {
-        Feed feed = new Feed();
+    public FeedType buildFeed(List<UsagePoint> usagePointList) throws FeedException {
+        FeedType feed = new FeedType();
 
-        feed.setFeedType("atom_1.0");
-        feed.setId(UUID.randomUUID().toString());
+
+        IdType feedId = new IdType();
+        feedId.setValue(UUID.randomUUID().toString());
+        feed.setId(feedId);
         feed.setTitle("UsagePoint Feed");
 
         populateEntries(usagePointList, feed);
@@ -44,34 +48,34 @@ public class FeedBuilder {
         return feed;
     }
 
-    private void populateEntries(List<UsagePoint> usagePointList, Feed feed) throws FeedException {
+    private void populateEntries(List<UsagePoint> usagePointList, FeedType feed) throws FeedException {
         for (UsagePoint usagePoint : usagePointList) {
             UsagePointEntry usagePointEntry = new UsagePointEntry(usagePoint);
-            feed.getEntries().add(usagePointEntry);
+            feed.addEntry(usagePointEntry);
 
             for(MeterReading meterReading : usagePoint.getMeterReadings()) {
                 MeterReadingEntry meterEntry = new MeterReadingEntry(meterReading);
-                feed.getEntries().add(meterEntry);
+                feed.addEntry(meterEntry);
 
                 if (meterReading.getReadingType() != null) {
                     ReadingTypeEntry readingTypeEntry = new ReadingTypeEntry(meterReading.getReadingType());
-                    feed.getEntries().add(readingTypeEntry);
+                    feed.addEntry(readingTypeEntry);
                 }
 
                 if (meterReading.getIntervalBlocks().size() > 0) {
                     IntervalBlocksEntry intervalBlocksEntry = new IntervalBlocksEntry(meterReading.getIntervalBlocks());
-                    feed.getEntries().add(intervalBlocksEntry);
+                    feed.addEntry(intervalBlocksEntry);
                 }
             }
 
             for(ElectricPowerUsageSummary summary : usagePoint.getElectricPowerUsageSummaries()) {
                 ElectricPowerUsageSummaryEntry entry = new ElectricPowerUsageSummaryEntry(summary);
-                feed.getEntries().add(entry);
+                feed.addEntry(entry);
             }
 
             for(ElectricPowerQualitySummary summary : usagePoint.getElectricPowerQualitySummaries()) {
                 ElectricPowerQualitySummaryEntry entry = new ElectricPowerQualitySummaryEntry(summary);
-                feed.getEntries().add(entry);
+                feed.addEntry(entry);
             }
         }
     }

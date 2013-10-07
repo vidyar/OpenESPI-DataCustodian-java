@@ -287,11 +287,31 @@ public class ContentType {
         return electricPowerUsageSummary;
     }
 
+    public void setElectricPowerUsageSummary(ElectricPowerUsageSummary electricPowerUsageSummary) {
+        this.electricPowerUsageSummary = electricPowerUsageSummary;
+    }
+
     public ElectricPowerQualitySummary getElectricPowerQualitySummary() {
         return electricPowerQualitySummary;
     }
 
     public void setElectricPowerQualitySummary(ElectricPowerQualitySummary electricPowerQualitySummary) {
         this.electricPowerQualitySummary = electricPowerQualitySummary;
+    }
+
+    public void setEntity(Object entity) {
+        if (entity instanceof UsagePoint) {
+            this.setUsagePoint((UsagePoint) entity);
+        } else if (entity instanceof MeterReading) {
+            this.setMeterReading((MeterReading) entity);
+        } else if (entity instanceof List) {
+            this.setIntervalBlocks((List<IntervalBlock>) entity);
+        } else if (entity instanceof ReadingType) {
+            this.setReadingType((ReadingType) entity);
+        } else if (entity instanceof ElectricPowerQualitySummary) {
+            this.setElectricPowerQualitySummary((ElectricPowerQualitySummary) entity);
+        } else if (entity instanceof ElectricPowerUsageSummary) {
+            this.setElectricPowerUsageSummary((ElectricPowerUsageSummary) entity);
+        }
     }
 }

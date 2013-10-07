@@ -17,7 +17,6 @@
 package org.energyos.espi.datacustodian.service.impl;
 
 
-import com.sun.syndication.feed.atom.Feed;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
@@ -105,7 +104,7 @@ public class UsagePointServiceImplTests {
 
         service.setFeedBuilder(feedBuilder);
 
-        Feed atomFeed = mock(Feed.class);
+        FeedType atomFeed = mock(FeedType.class);
 
         List<UsagePoint> usagePointList = new ArrayList<UsagePoint>();
         String atomFeedResult = "<?xml version=\"1.0\"?><feed></feed>";
@@ -126,7 +125,7 @@ public class UsagePointServiceImplTests {
 
         service.setFeedBuilder(feedBuilder);
 
-        Feed atomFeed = mock(Feed.class);
+        FeedType atomFeed = mock(FeedType.class);
 
         String atomFeedResult = "<?xml version=\"1.0\"?><feed></feed>";
 

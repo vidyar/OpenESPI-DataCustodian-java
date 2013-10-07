@@ -20,6 +20,7 @@ import com.sun.syndication.feed.atom.Link;
 import junit.framework.AssertionFailedError;
 import org.energyos.espi.datacustodian.atom.EspiEntry;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
+import org.energyos.espi.datacustodian.models.atom.LinkType;
 import org.energyos.espi.datacustodian.service.UsagePointService;
 import org.energyos.espi.datacustodian.utils.factories.FixtureFactory;
 
@@ -79,7 +80,7 @@ public class TestUtils {
     }
 
     public static <T extends EspiEntry<?>> String findRelatedHref(T entry, String type) {
-        for (Link link : entry.getRelatedLinks()) {
+        for (LinkType link : entry.getRelatedLinks()) {
             if (link.getHref().contains(type)) {
                 return link.getHref();
             }

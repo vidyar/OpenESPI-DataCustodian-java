@@ -17,10 +17,10 @@
 package org.energyos.espi.datacustodian.utils;
 
 
-import com.sun.syndication.feed.atom.Feed;
 import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.atom.*;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
+import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +39,7 @@ import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newUsa
 @ContextConfiguration("/spring/test-context.xml")
 public class FeedBuilderTests {
 
-    private Feed feed;
+    private FeedType feed;
 
     @Before
     public void before() throws FeedException {
@@ -80,12 +80,12 @@ public class FeedBuilderTests {
         assertHasEntry(feed, UsagePointEntry.class);
     }
 
-    public void assertHasEntry(Feed feed, Class expected) {
+    public void assertHasEntry(FeedType feed, Class expected) {
         assertTrue(hasEntry(feed, expected));
     }
 
-    private boolean hasEntry(Feed feed, Class expected) {
-        for (Object entry : feed.getEntries()) {
+    private boolean hasEntry(FeedType feed, Class expected) {
+        for (Object entry : feed.getEspiEntries()) {
             if (entry.getClass().equals(expected)) {
                 return true;
             }

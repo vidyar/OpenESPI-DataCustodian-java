@@ -1,5 +1,6 @@
 package org.energyos.espi.datacustodian.utils;
 
+import org.energyos.espi.datacustodian.atom.EspiEntry;
 import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.LinkType;
 

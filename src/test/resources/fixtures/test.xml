@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:feed ns2:title="Feed title" xmlns:ns2="http://www.w3.org/2005/Atom" xmlns:ns3="http://naesb.org/espi">
+    <ns2:DateTime></ns2:DateTime>
+    <ns2:link href="/ThirdParty/83e269c1/Batch" rel="self"/>
+    <ns2:espiEntries>
+        <ns2:title>Electric meter</ns2:title>
+        <selfLink href="RetailCustomer/null/UsagePoint/null" rel="self"/>
+        <upLink href="RetailCustomer/null/UsagePoint" rel="up"/>
+        <relatedLinks href="RetailCustomer/null/UsagePoint/null/MeterReading" rel="related"/>
+        <relatedLinks href="RetailCustomer/null/UsagePoint/null/ElectricPowerUsageSummary" rel="related"/>
+        <espiObject xsi:type="ns3:UsagePoint" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ns3:roleFlags>726F6C6520666C616773</ns3:roleFlags>
+            <ns3:ServiceCategory>
+                <ns3:kind>0</ns3:kind>
+            </ns3:ServiceCategory>
+            <ns3:status>5</ns3:status>
+        </espiObject>
+    </ns2:espiEntries>
+</ns2:feed>

@@ -16,68 +16,75 @@
 
 package org.energyos.espi.datacustodian.atom;
 
-import com.sun.syndication.feed.atom.Content;
-import com.sun.syndication.feed.atom.Entry;
-import com.sun.syndication.feed.atom.Link;
-import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.domain.IdentifiedObject;
+import org.energyos.espi.datacustodian.models.atom.ContentType;
+import org.energyos.espi.datacustodian.models.atom.EntryType;
+import org.energyos.espi.datacustodian.models.atom.IdType;
+import org.energyos.espi.datacustodian.models.atom.LinkType;
 import org.energyos.espi.datacustodian.utils.EspiMarshaller;
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EspiEntry<T extends IdentifiedObject> extends Entry {
-    private Link selfLink = new Link();
-    private Link upLink = new Link();
-    private List<Link> relatedLinks = new ArrayList<>();
+public abstract class EspiEntry<T extends IdentifiedObject> extends EntryType {
+    private LinkType selfLink = new LinkType();
+    private LinkType upLink = new LinkType();
+    private List<LinkType> relatedLinks = new ArrayList<>();
 
     protected T espiObject;
 
-    public EspiEntry(T espiObject) throws FeedException {
+    public EspiEntry(T espiObject) {
         this.espiObject = espiObject;
         this.setTitle(espiObject.getDescription());
-        this.setId(espiObject.getMRID());
-        this.setPublished(espiObject.getCreated());
-        this.setUpdated(espiObject.getUpdated());
+
+
+
+        IdType entryId = new IdType();
+        entryId.setValue(espiObject.getMRID());
+        this.setId(entryId);
+
+        this.setPublished(new DateTime(espiObject.getCreated()));
+        this.setUpdated(new DateTime(espiObject.getUpdated()));
 
         selfLink.setRel("self");
         selfLink.setHref(getSelfHref());
         upLink.setRel("up");
         upLink.setHref(getUpHref());
 
-        getOtherLinks().add(selfLink);
-        getOtherLinks().add(upLink);
+        getLinks().add(selfLink);
+        getLinks().add(upLink);
 
         buildRelatedLinks();
 
-        Content content = new Content();
-        content.setValue(EspiMarshaller.marshal(espiObject));
-        this.getContents().add(content);
+        ContentType content = new ContentType();
+        content.setEntity(espiObject);
+        this.setContent(content);
     }
 
     protected abstract String getSelfHref();
     protected abstract String getUpHref();
     protected abstract void buildRelatedLinks();
 
-    public Link getSelfLink() {
+    public LinkType getSelfLink() {
         return selfLink;
     }
 
-    public Link getUpLink() {
+    public LinkType getUpLink() {
         return upLink;
     }
 
-    public List<Link> getRelatedLinks() {
+    public List<LinkType> getRelatedLinks() {
         return relatedLinks;
     }
 
     protected void addRelatedLink(String href) {
-        Link link = new Link();
+        LinkType link = new LinkType();
         link.setRel("related");
         link.setHref(href);
 
         relatedLinks.add(link);
-        getOtherLinks().add(link);
+        getLinks().add(link);
     }
 
     protected void setUpLinkHref(String href) {

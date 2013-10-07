@@ -55,6 +55,7 @@ import java.util.Map;
 @XmlType(name = "dateTimeType", propOrder = {
     "value"
 })
+@XmlRootElement(name = "DateTime")
 public class DateTimeType {
 
     @XmlValue

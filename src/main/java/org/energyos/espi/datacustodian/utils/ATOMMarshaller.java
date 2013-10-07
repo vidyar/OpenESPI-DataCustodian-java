@@ -22,27 +22,67 @@ import com.sun.syndication.io.WireFeedOutput;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.util.JAXBResult;
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
+import java.io.StringWriter;
 
 @Component
 public class ATOMMarshaller {
 
+    @Qualifier("jaxb2Marshaller")
     @Autowired
-    private Jaxb2Marshaller marshaller;
+    private Jaxb2Marshaller unmarshaller;
+    private static Marshaller marshaller;
+    private static JAXBContext jaxbContext;
 
     public FeedType unmarshal(InputStream stream) throws JAXBException {
         @SuppressWarnings("unchecked")
-        JAXBElement<FeedType> object = (JAXBElement<FeedType>) marshaller.unmarshal(new StreamSource(stream));
+        JAXBElement<FeedType> object = (JAXBElement<FeedType>) unmarshaller.unmarshal(new StreamSource(stream));
         return object.getValue();
     }
 
-    public String marshal(Feed feed) throws FeedException {
-        return StringEscapeUtils.unescapeXml(new WireFeedOutput().outputString(feed));
+    public String marshal(FeedType feed) throws FeedException {
+        final StringWriter out = new StringWriter();
+//        marshaller.marshal(feed, new StreamResult(out));
+//        return out.toString();
+
+        try {
+            getMarshaller().marshal(feed, out);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+            throw new FeedException("Invalid " + feed.getClass().toString() + ". Could not serialize.");
+        }
+
+        return out.toString();
+    }
+
+    private static Marshaller getMarshaller() throws JAXBException {
+        if (marshaller == null) {
+            JAXBContext jaxbContext = getJaxbContext();
+            marshaller = jaxbContext.createMarshaller();
+//            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        }
+
+        return marshaller;
+    }
+
+    private static JAXBContext getJaxbContext() throws JAXBException {
+        if (jaxbContext == null) {
+            jaxbContext = JAXBContext.newInstance("org.energyos.espi.datacustodian.models.atom");
+        }
+
+        return jaxbContext;
     }
 }
