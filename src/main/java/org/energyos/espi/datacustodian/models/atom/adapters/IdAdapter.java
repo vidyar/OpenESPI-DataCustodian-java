@@ -16,20 +16,20 @@
 
 package org.energyos.espi.datacustodian.models.atom.adapters;
 
-import org.energyos.espi.datacustodian.models.atom.LinkType;
+import org.energyos.espi.datacustodian.models.atom.IdType;
 import org.energyos.espi.datacustodian.models.atom.ObjectFactory;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class LinkAdapter extends XmlAdapter<JAXBElement<LinkType>, LinkType> {
+public class IdAdapter extends XmlAdapter<JAXBElement<IdType>, IdType> {
     @Override
-    public LinkType unmarshal(JAXBElement<LinkType> v) throws Exception {
+    public IdType unmarshal(JAXBElement<IdType> v) throws Exception {
         return v.getValue();
     }
 
     @Override
-    public JAXBElement<LinkType> marshal(LinkType v) throws Exception {
-        return new ObjectFactory().createSourceTypeLink(v);
+    public JAXBElement<IdType> marshal(IdType v) throws Exception {
+        return new ObjectFactory().createSourceTypeId(v);
     }
 }

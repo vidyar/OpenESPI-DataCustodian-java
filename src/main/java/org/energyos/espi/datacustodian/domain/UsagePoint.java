@@ -24,6 +24,7 @@
 package org.energyos.espi.datacustodian.domain;
 
 import org.energyos.espi.datacustodian.models.atom.adapters.GenericAdapter;
+import org.energyos.espi.datacustodian.models.atom.adapters.UsagePointAdapter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -75,7 +76,7 @@ import java.util.List;
         @NamedQuery(name = UsagePoint.QUERY_FIND_BY_UUID,
                 query = "SELECT point FROM UsagePoint point WHERE point.uuid = :uuid")
 })
-@XmlJavaTypeAdapter(GenericAdapter.class)
+@XmlJavaTypeAdapter(UsagePointAdapter.class)
 public class UsagePoint
     extends IdentifiedObject
 {

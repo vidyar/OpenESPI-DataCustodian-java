@@ -42,6 +42,7 @@ import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 import static org.energyos.espi.datacustodian.support.Asserts.assertXpathValue;
 import static org.energyos.espi.datacustodian.support.Asserts.assertXpathValueStartsWith;
 import static org.energyos.espi.datacustodian.utils.factories.FeedFactory.newFeed;
+import static org.energyos.espi.datacustodian.utils.factories.FeedFactory.newFeedType;
 import static org.junit.Assert.assertEquals;
 
 
@@ -197,7 +198,7 @@ public class ATOMMarshallerFeedTests extends XMLTest {
     }
 
     private String newFeedXML() throws FeedException {
-        return marshaller.marshal(newFeed());
+        return marshaller.marshal(newFeedType());
     }
 
     private FeedType unmarshalToFeed(String xml) throws JAXBException {

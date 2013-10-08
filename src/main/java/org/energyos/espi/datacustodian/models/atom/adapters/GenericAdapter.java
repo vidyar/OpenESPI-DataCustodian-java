@@ -16,8 +16,11 @@
 
 package org.energyos.espi.datacustodian.models.atom.adapters;
 
+import org.energyos.espi.datacustodian.domain.ObjectFactory;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.namespace.QName;
 
 public class GenericAdapter extends XmlAdapter<JAXBElement<Object>, Object> {
     @Override
@@ -27,6 +30,9 @@ public class GenericAdapter extends XmlAdapter<JAXBElement<Object>, Object> {
 
     @Override
     public JAXBElement<Object> marshal(Object v) throws Exception {
-        return null;
+        if (v == null) {
+            return null;
+        }
+        return new ObjectFactory().createObject(v);
     }
 }

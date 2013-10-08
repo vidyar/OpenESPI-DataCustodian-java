@@ -23,6 +23,7 @@ import org.energyos.espi.datacustodian.domain.ElectricPowerQualitySummary;
 import org.energyos.espi.datacustodian.domain.ElectricPowerUsageSummary;
 import org.energyos.espi.datacustodian.domain.MeterReading;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
+import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -74,5 +75,9 @@ public class FeedBuilder {
                 feed.getEntries().add(entry);
             }
         }
+    }
+
+    public FeedType buildFeedType(List<UsagePoint> usagePointList) {
+        return null;
     }
 }

@@ -18,6 +18,7 @@ package org.energyos.espi.datacustodian.service.impl;
 
 
 import com.sun.syndication.feed.atom.Feed;
+import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
@@ -96,6 +97,28 @@ public class UsagePointServiceImplTests {
     }
 
     @Test
+    public void exportUsagePoints_returnsFeedType() throws FeedException {
+        RetailCustomer customer = new RetailCustomer();
+        customer.setId(1L);
+
+        FeedBuilder feedBuilder = mock(FeedBuilder.class);
+
+        service.setFeedBuilder(feedBuilder);
+
+        FeedType atomFeed = mock(FeedType.class);
+
+        List<UsagePoint> usagePointList = new ArrayList<UsagePoint>();
+        String atomFeedResult = "<?xml version=\"1.0\"?><feed></feed>";
+
+        when(feedBuilder.buildFeedType(usagePointList)).thenReturn(atomFeed);
+        when(marshaller.marshal(atomFeed)).thenReturn(atomFeedResult);
+
+        assertEquals(atomFeedResult, service.exportUsagePoints(customer));
+        verify(feedBuilder).buildFeedType(usagePointList);
+        verify(marshaller).marshal(atomFeed);
+    }
+
+    @Test
     public void exportUsagePoints_returnsFeed() throws Exception {
 
         RetailCustomer customer = new RetailCustomer();
@@ -109,7 +132,6 @@ public class UsagePointServiceImplTests {
 
         List<UsagePoint> usagePointList = new ArrayList<UsagePoint>();
         String atomFeedResult = "<?xml version=\"1.0\"?><feed></feed>";
-
 
         when(feedBuilder.buildFeed(usagePointList)).thenReturn(atomFeed);
         when(marshaller.marshal(atomFeed)).thenReturn(atomFeedResult);

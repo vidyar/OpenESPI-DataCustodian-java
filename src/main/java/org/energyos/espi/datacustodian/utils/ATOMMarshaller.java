@@ -22,17 +22,24 @@ import com.sun.syndication.io.WireFeedOutput;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class ATOMMarshaller {
 
+    @Qualifier("jaxb2Marshaller")
     @Autowired
     private Jaxb2Marshaller marshaller;
 
@@ -44,5 +51,14 @@ public class ATOMMarshaller {
 
     public String marshal(Feed feed) throws FeedException {
         return StringEscapeUtils.unescapeXml(new WireFeedOutput().outputString(feed));
+    }
+
+    public String marshal(FeedType feed) throws FeedException {
+        Map<String, Boolean> properties = new HashMap<>();
+        properties.put(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.setMarshallerProperties(properties);
+        StringWriter out = new StringWriter();
+        marshaller.marshal(feed, new StreamResult(out));
+        return out.toString();
     }
 }

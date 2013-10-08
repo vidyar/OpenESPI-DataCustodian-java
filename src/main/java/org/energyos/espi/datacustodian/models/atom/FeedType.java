@@ -25,17 +25,15 @@
 package org.energyos.espi.datacustodian.models.atom;
 
 import org.energyos.espi.datacustodian.models.atom.adapters.EntryAdapter;
-import org.energyos.espi.datacustodian.models.atom.adapters.GenericAdapter;
+import org.energyos.espi.datacustodian.models.atom.adapters.IdAdapter;
+import org.energyos.espi.datacustodian.models.atom.adapters.LinkAdapter;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -76,27 +74,41 @@ import java.util.Map;
  * 
  * 
  */
+@XmlRootElement(name = "feed")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "feedType", propOrder = {
         "entries",
         "id",
+        "title",
+        "updated",
+        "links",
         "authorOrCategoryOrContributor"
 })
 public class FeedType {
 
-    @XmlElementRefs({
-            @XmlElementRef(name = "entry", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false)
+//    @XmlElementRefs({
+//            @XmlElementRef(name = "entry", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false)
+//    })
+//    @XmlAnyElement(lax = true)
+//    @XmlJavaTypeAdapter(EntryAdapter.class)
+    @XmlElements({
+            @XmlElement(name = "entry")
     })
-    @XmlAnyElement(lax = true)
-    @XmlJavaTypeAdapter(EntryAdapter.class)
     protected List<EntryType> entries = new ArrayList<EntryType>();
 
     @XmlElementRefs({
             @XmlElementRef(name = "id", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
     })
     @XmlAnyElement(lax = true)
-    @XmlJavaTypeAdapter(GenericAdapter.class)
-    protected IdType id;
+    @XmlJavaTypeAdapter(IdAdapter.class)
+    protected IdType id = new IdType();
+
+    @XmlElementRefs({
+            @XmlElementRef(name = "link", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false)
+    })
+    @XmlAnyElement(lax = true)
+    @XmlJavaTypeAdapter(LinkAdapter.class)
+    protected List<LinkType> links = new ArrayList<>();
 
     @XmlElementRefs({
         @XmlElementRef(name = "subtitle", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
@@ -127,6 +139,8 @@ public class FeedType {
 
     @XmlAnyAttribute
     private Map<QName, String> otherAttributes = new HashMap<QName, String>();
+    private String title;
+    private Date updated;
 
     public List<EntryType> getEntries() {
         return entries;
@@ -249,5 +263,33 @@ public class FeedType {
      */
     public Map<QName, String> getOtherAttributes() {
         return otherAttributes;
+    }
+
+    public void setId(String value) {
+        this.id.setValue(value);
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+
+    public void setSelfLinkHref(String href) {
+        LinkType linkType = new LinkType();
+        linkType.setHref(href);
+        linkType.setRel("self");
+        this.links.add(linkType);
     }
 }

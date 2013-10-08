@@ -16,6 +16,7 @@
 
 package org.energyos.espi.datacustodian.models.atom.adapters;
 
+import org.energyos.espi.datacustodian.domain.ObjectFactory;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
 
 import javax.xml.bind.JAXBElement;
@@ -24,11 +25,14 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 public class UsagePointAdapter extends XmlAdapter<JAXBElement<UsagePoint>, UsagePoint> {
     @Override
     public UsagePoint unmarshal(JAXBElement<UsagePoint> v) throws Exception {
-        return (UsagePoint)v.getValue();
+        return v.getValue();
     }
 
     @Override
     public JAXBElement<UsagePoint> marshal(UsagePoint v) throws Exception {
-        return null;
+        if (v== null) {
+            return null;
+        }
+        return new ObjectFactory().createUsagePoint(v);
     }
 }

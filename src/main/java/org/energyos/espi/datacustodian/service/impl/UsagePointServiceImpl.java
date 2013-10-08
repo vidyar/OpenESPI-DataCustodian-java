@@ -89,7 +89,7 @@ public class UsagePointServiceImpl implements UsagePointService {
     }
 
     public String exportUsagePoints(RetailCustomer customer) throws FeedException {
-        return marshaller.marshal(feedBuilder.buildFeed(findAllByRetailCustomer(customer)));
+        return marshaller.marshal(feedBuilder.buildFeedType(findAllByRetailCustomer(customer)));
     }
 
     public String exportUsagePointById(Long usagePointId) throws FeedException {

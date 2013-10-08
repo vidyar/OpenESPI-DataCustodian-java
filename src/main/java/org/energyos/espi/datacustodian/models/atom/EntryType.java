@@ -24,10 +24,7 @@
 
 package org.energyos.espi.datacustodian.models.atom;
 
-import org.energyos.espi.datacustodian.models.atom.adapters.ContentAdapter;
-import org.energyos.espi.datacustodian.models.atom.adapters.DateTimeAdapter;
-import org.energyos.espi.datacustodian.models.atom.adapters.GenericAdapter;
-import org.energyos.espi.datacustodian.models.atom.adapters.LinkAdapter;
+import org.energyos.espi.datacustodian.models.atom.adapters.*;
 import org.joda.time.DateTime;
 
 import javax.xml.bind.JAXBElement;
@@ -89,25 +86,32 @@ import java.util.Map;
         "authorOrCategoryOrContent"
 })
 public class EntryType {
-    @XmlElementRefs({
-            @XmlElementRef(name = "content", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
+//    @XmlElementRefs({
+//            @XmlElementRef(name = "content", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
+//    })
+//    @XmlAnyElement(lax = true)
+//    @XmlJavaTypeAdapter(ContentAdapter.class)
+    @XmlElements({
+            @XmlElement
     })
-    @XmlAnyElement(lax = true)
-    @XmlJavaTypeAdapter(ContentAdapter.class)
     protected ContentType content;
 
-    @XmlElementRefs({
-            @XmlElementRef(name = "id", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
-    })
-    @XmlAnyElement(lax = true)
-    @XmlJavaTypeAdapter(GenericAdapter.class)
-    protected IdType id;
+//    @XmlElementRefs({
+//            @XmlElementRef(name = "id", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
+//    })
+//    @XmlAnyElement(lax = true)
+//    @XmlJavaTypeAdapter(IdAdapter.class)
+    @XmlElement
+    protected IdType id = new IdType();
 
-    @XmlElementRefs({
-            @XmlElementRef(name = "link", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
+//    @XmlElementRefs({
+//            @XmlElementRef(name = "link", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false),
+//    })
+//    @XmlAnyElement(lax = true)
+//    @XmlJavaTypeAdapter(LinkAdapter.class)
+    @XmlElements({
+            @XmlElement
     })
-    @XmlAnyElement(lax = true)
-    @XmlJavaTypeAdapter(LinkAdapter.class)
     protected List<LinkType> links = new ArrayList<LinkType>();
 
     @XmlElement
@@ -117,14 +121,14 @@ public class EntryType {
             @XmlElementRef(name = "published", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false)
     })
     @XmlAnyElement(lax = true)
-    @XmlJavaTypeAdapter(DateTimeAdapter.class)
+    @XmlJavaTypeAdapter(EntryPublishedAdapter.class)
     protected DateTime published;
 
     @XmlElementRefs({
             @XmlElementRef(name = "updated", namespace = "http://www.w3.org/2005/Atom", type = JAXBElement.class, required = false)
     })
     @XmlAnyElement(lax = true)
-    @XmlJavaTypeAdapter(DateTimeAdapter.class)
+    @XmlJavaTypeAdapter(EntryUpdatedAdapter.class)
     protected DateTime updated;
 
     @XmlElementRefs({
@@ -310,4 +314,26 @@ public class EntryType {
         return otherAttributes;
     }
 
+    public void setId(String value) {
+        this.id.setValue(value);
+    }
+
+    public void setSelfLinkHref(String href) {
+        addLink(href, "self");
+    }
+
+    public void setUpLinkHref(String href) {
+        addLink(href, "up");
+    }
+
+    public void setRelatedLinkHref(String href) {
+        addLink(href, "related");
+    }
+
+    private void addLink(String href, String rel) {
+        LinkType linkType = new LinkType();
+        linkType.setHref(href);
+        linkType.setRel(rel);
+        this.links.add(linkType);
+    }
 }

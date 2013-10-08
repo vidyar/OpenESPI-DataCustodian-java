@@ -18,6 +18,7 @@ package org.energyos.espi.datacustodian.models.atom.adapters;
 
 import org.energyos.espi.datacustodian.domain.IntervalBlock;
 import org.energyos.espi.datacustodian.domain.IntervalReading;
+import org.energyos.espi.datacustodian.domain.ObjectFactory;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -37,6 +38,6 @@ public class IntervalBlockAdapter extends XmlAdapter<JAXBElement<IntervalBlock>,
 
     @Override
     public JAXBElement<IntervalBlock> marshal(IntervalBlock v) throws Exception {
-        return null;
+        return new ObjectFactory().createIntervalBlock(v);
     }
 }

@@ -16,20 +16,23 @@
 
 package org.energyos.espi.datacustodian.models.atom.adapters;
 
-import org.energyos.espi.datacustodian.models.atom.LinkType;
-import org.energyos.espi.datacustodian.models.atom.ObjectFactory;
+import org.energyos.espi.datacustodian.domain.ElectricPowerQualitySummary;
+import org.energyos.espi.datacustodian.domain.ObjectFactory;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class LinkAdapter extends XmlAdapter<JAXBElement<LinkType>, LinkType> {
+public class ElectricPowerQualitySummaryAdapter extends XmlAdapter<JAXBElement<ElectricPowerQualitySummary>, ElectricPowerQualitySummary> {
     @Override
-    public LinkType unmarshal(JAXBElement<LinkType> v) throws Exception {
-        return v.getValue();
+    public ElectricPowerQualitySummary unmarshal(JAXBElement<ElectricPowerQualitySummary> v) throws Exception {
+        return (ElectricPowerQualitySummary)v.getValue();
     }
 
     @Override
-    public JAXBElement<LinkType> marshal(LinkType v) throws Exception {
-        return new ObjectFactory().createSourceTypeLink(v);
+    public JAXBElement<ElectricPowerQualitySummary> marshal(ElectricPowerQualitySummary v) throws Exception {
+        if (v== null) {
+            return null;
+        }
+        return new ObjectFactory().createElectricPowerQualitySummary(v);
     }
 }

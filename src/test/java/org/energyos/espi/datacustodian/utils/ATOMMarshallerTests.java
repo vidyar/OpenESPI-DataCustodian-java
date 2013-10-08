@@ -2,6 +2,7 @@ package org.energyos.espi.datacustodian.utils;
 
 import com.sun.syndication.io.FeedException;
 import org.custommonkey.xmlunit.exceptions.XpathException;
+import org.energyos.espi.datacustodian.atom.XMLTest;
 import org.energyos.espi.datacustodian.domain.*;
 import org.energyos.espi.datacustodian.models.atom.ContentType;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
@@ -21,13 +22,14 @@ import java.util.List;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 import static org.energyos.espi.datacustodian.utils.factories.FeedFactory.newFeed;
+import static org.energyos.espi.datacustodian.utils.factories.FeedFactory.newFeedType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration("/spring/test-context.xml")
-public class ATOMMarshallerTests {
+public class ATOMMarshallerTests extends XMLTest {
 
     String FEED_PREFIX = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             "<?xml-stylesheet type=\"text/xsl\" href=\"GreenButtonDataStyleSheet.xslt\"?>" +
@@ -111,10 +113,16 @@ public class ATOMMarshallerTests {
     }
 
     @Test
-    public void marshal_usagePointContent() throws FeedException, SAXException, IOException, XpathException {
-        String xmlResult = marshaller.marshal(newFeed());
+    public void marshal_domainContent() throws FeedException, SAXException, IOException, XpathException {
+        String xmlResult = marshaller.marshal(newFeedType());
+        System.out.println(xmlResult);
 
         assertXpathExists("/feed/entry[1]/content/UsagePoint", xmlResult);
+        assertXpathExists("/feed/entry[2]/content/MeterReading", xmlResult);
+        assertXpathExists("/feed/entry[3]/content/ReadingType", xmlResult);
+        assertXpathExists("/feed/entry[4]/content/ElectricPowerUsageSummary", xmlResult);
+        assertXpathExists("/feed/entry[5]/content/ElectricPowerQualitySummary", xmlResult);
+        assertXpathExists("/feed/entry[6]/content/IntervalBlock", xmlResult);
     }
 
     private ContentType unmarshalToContentType(String espiXml) throws JAXBException {

@@ -294,4 +294,8 @@ public class ContentType {
     public void setElectricPowerQualitySummary(ElectricPowerQualitySummary electricPowerQualitySummary) {
         this.electricPowerQualitySummary = electricPowerQualitySummary;
     }
+
+    public void setElectricPowerUsageSummary(ElectricPowerUsageSummary electricPowerUsageSummary) {
+        this.electricPowerUsageSummary = electricPowerUsageSummary;
+    }
 }

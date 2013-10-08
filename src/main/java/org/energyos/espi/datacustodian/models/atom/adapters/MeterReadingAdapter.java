@@ -16,20 +16,23 @@
 
 package org.energyos.espi.datacustodian.models.atom.adapters;
 
-import org.energyos.espi.datacustodian.models.atom.LinkType;
-import org.energyos.espi.datacustodian.models.atom.ObjectFactory;
+import org.energyos.espi.datacustodian.domain.ObjectFactory;
+import org.energyos.espi.datacustodian.domain.MeterReading;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class LinkAdapter extends XmlAdapter<JAXBElement<LinkType>, LinkType> {
+public class MeterReadingAdapter extends XmlAdapter<JAXBElement<MeterReading>, MeterReading> {
     @Override
-    public LinkType unmarshal(JAXBElement<LinkType> v) throws Exception {
+    public MeterReading unmarshal(JAXBElement<MeterReading> v) throws Exception {
         return v.getValue();
     }
 
     @Override
-    public JAXBElement<LinkType> marshal(LinkType v) throws Exception {
-        return new ObjectFactory().createSourceTypeLink(v);
+    public JAXBElement<MeterReading> marshal(MeterReading v) throws Exception {
+        if (v== null) {
+            return null;
+        }
+        return new ObjectFactory().createMeterReading(v);
     }
 }

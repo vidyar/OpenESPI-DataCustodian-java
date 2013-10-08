@@ -25,6 +25,7 @@
 package org.energyos.espi.datacustodian.domain;
 
 import org.energyos.espi.datacustodian.models.atom.adapters.GenericAdapter;
+import org.energyos.espi.datacustodian.models.atom.adapters.ReadingTypeAdapter;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -96,7 +97,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 @Entity
 @Table(name = "reading_types")
-@XmlJavaTypeAdapter(GenericAdapter.class)
+@XmlJavaTypeAdapter(ReadingTypeAdapter.class)
 public class ReadingType
         extends IdentifiedObject {
 

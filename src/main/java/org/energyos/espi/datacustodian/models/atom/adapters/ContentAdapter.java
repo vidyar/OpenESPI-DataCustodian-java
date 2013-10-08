@@ -17,6 +17,7 @@
 package org.energyos.espi.datacustodian.models.atom.adapters;
 
 import org.energyos.espi.datacustodian.models.atom.ContentType;
+import org.energyos.espi.datacustodian.models.atom.ObjectFactory;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -29,6 +30,6 @@ public class ContentAdapter extends XmlAdapter<JAXBElement<ContentType>, Content
 
     @Override
     public JAXBElement<ContentType> marshal(ContentType v) throws Exception {
-        return null;
+        return new ObjectFactory().createEntryTypeContent(v);
     }
 }
