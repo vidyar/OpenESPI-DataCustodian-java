@@ -87,8 +87,8 @@ public class EspiFactory {
 
     public static RetailCustomer newRetailCustomer() {
         RetailCustomer retailCustomer = new RetailCustomer();
-        retailCustomer.setFirstName("First" + System.currentTimeMillis());
-        retailCustomer.setLastName("Last" + System.currentTimeMillis());
+        retailCustomer.setFirstName(("First" + UUID.randomUUID()).substring(0, 29));
+        retailCustomer.setLastName(("Last" + UUID.randomUUID()).substring(0, 29));
 
         return retailCustomer;
     }
