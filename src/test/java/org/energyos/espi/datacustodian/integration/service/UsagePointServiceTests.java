@@ -1,20 +1,27 @@
 package org.energyos.espi.datacustodian.integration.service;
 
+import org.energyos.espi.datacustodian.domain.ElectricPowerQualitySummary;
+import org.energyos.espi.datacustodian.domain.ElectricPowerUsageSummary;
 import org.energyos.espi.datacustodian.domain.MeterReading;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
+import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.energyos.espi.datacustodian.service.RetailCustomerService;
 import org.energyos.espi.datacustodian.service.UsagePointService;
+import org.energyos.espi.datacustodian.utils.ATOMMarshaller;
+import org.energyos.espi.datacustodian.utils.UsagePointBuilder;
 import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
 import org.energyos.espi.datacustodian.utils.factories.FixtureFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.bind.JAXBException;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +35,8 @@ public class UsagePointServiceTests {
     private UsagePointService usagePointService;
     @Autowired
     private RetailCustomerService retailCustomerService;
+    @Autowired
+    private ATOMMarshaller marshaller;
 
     @Test
     public void associateByUUID_nonExistentUsagePoint() {
@@ -113,4 +122,6 @@ public class UsagePointServiceTests {
 
         assertNotNull(meterReading.getId());
     }
+    
+    
 }

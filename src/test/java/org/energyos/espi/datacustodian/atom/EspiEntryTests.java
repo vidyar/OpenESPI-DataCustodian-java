@@ -20,6 +20,7 @@ package org.energyos.espi.datacustodian.atom;
 import com.sun.syndication.feed.atom.Content;
 import com.sun.syndication.feed.atom.Link;
 import com.sun.syndication.io.FeedException;
+
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
@@ -28,6 +29,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.util.GregorianCalendar;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 import static org.junit.Assert.*;
@@ -42,6 +44,9 @@ public class EspiEntryTests extends XMLTest {
         usagePoint.setId(1L);
         usagePoint.setMRID("E8E75691-7F9D-49F3-8BE2-3A74EBF6BFC0");
         usagePoint.setDescription("Electric Meter");
+        usagePoint.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        usagePoint.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));        
+        
         RetailCustomer customer = new RetailCustomer();
         customer.setId(3L);
         usagePoint.setRetailCustomer(customer);

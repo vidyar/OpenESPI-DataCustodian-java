@@ -29,7 +29,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.*;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.UUID;
 
 
@@ -75,6 +78,7 @@ public class IdentifiedObject
 {
     @XmlTransient
     protected String description;
+    
 
     @XmlTransient
     protected String uuid;
@@ -85,8 +89,10 @@ public class IdentifiedObject
 
     @XmlTransient
     protected Date created = new Date();
-    @XmlTransient
-    protected Date updated = new Date();
+
+    protected GregorianCalendar updated;
+    
+    protected GregorianCalendar published;
 
     public Long getId() {
         return id;
@@ -153,14 +159,23 @@ public class IdentifiedObject
     public void setCreated(Date created) {
         this.created = created;
     }
-
-    public Date getUpdated() {
+    
+    public GregorianCalendar getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
+    public void setUpdated(GregorianCalendar updated) {
         this.updated = updated;
     }
+    
+    public GregorianCalendar getPublished() {
+        return published;
+    }
+
+    public void setPublished(GregorianCalendar published) {
+        this.published = published;
+    }
+
 
     public void setUUID(UUID uuid) {
         this.uuid = uuid.toString().toUpperCase();

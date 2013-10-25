@@ -38,7 +38,7 @@ public abstract class EspiEntry<T extends IdentifiedObject> extends Entry {
         this.setTitle(espiObject.getDescription());
         this.setId(espiObject.getMRID());
         this.setPublished(espiObject.getCreated());
-        this.setUpdated(espiObject.getUpdated());
+        this.setUpdated(espiObject.getUpdated().getTime());
 
         selfLink.setRel("self");
         selfLink.setHref(getSelfHref());

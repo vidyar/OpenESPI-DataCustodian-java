@@ -58,8 +58,9 @@ public class EspiFactory {
         usagePoint.addElectricPowerUsageSummary(newElectricPowerUsageSummary());
         usagePoint.addElectricPowerQualitySummary(newElectricPowerQualitySummary());
         usagePoint.setLocalTimeParameters(newLocalTimeParameters());
+        
         usagePoint.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
-        usagePoint.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0).getTime());
+        usagePoint.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));
 
         return usagePoint;
     }
@@ -103,6 +104,10 @@ public class EspiFactory {
         meterReading.addIntervalBlock(newIntervalBlock());
 
         meterReading.setReadingType(newReadingType());
+        
+        meterReading.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        meterReading.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));        
+        
 
         return meterReading;
     }
@@ -117,6 +122,9 @@ public class EspiFactory {
         timeConfiguration.setDstOffset(1000L);
         timeConfiguration.setDstStartRule("bar".getBytes());
         timeConfiguration.setTzOffset(1234L);
+        
+        timeConfiguration.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        timeConfiguration.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));
 
         return timeConfiguration;
     }
@@ -153,6 +161,9 @@ public class EspiFactory {
         readingType.setArgument(argument);
         readingType.setInterharmonic(interharmonic);
         readingType.setMeasuringPeriod("measuringPeriod");
+        
+        readingType.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        readingType.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));
 
         return readingType;
     }
@@ -169,6 +180,9 @@ public class EspiFactory {
 
         intervalBlock.setMRID("E8E75691-7F9D-49F3-8BE2-3A74EBF6BFC0");
         intervalBlock.setInterval(interval);
+        
+        intervalBlock.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        intervalBlock.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));        
 
         return intervalBlock;
     }
@@ -189,6 +203,8 @@ public class EspiFactory {
         intervalReading.setMRID("E8E75691-7F9D-49F3-8BE2-3A74EBF6BFC0");
 
         intervalReading.setTimePeriod(timePeriod);
+        intervalReading.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        intervalReading.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));        
 
 
         return intervalReading;
@@ -208,7 +224,7 @@ public class EspiFactory {
         summary.setDescription("Usage Summary");
         summary.setBillingPeriod(new DateTimeInterval(1119600L, 1119600L));
         summary.setCreated(new GregorianCalendar(2012, 10, 24, 0, 0, 0).getTime());
-        summary.setUpdated(new GregorianCalendar(2012, 10, 24, 0, 0, 0).getTime());
+        summary.setUpdated(new GregorianCalendar(2012, 10, 24, 0, 0, 0));
         summary.setBillLastPeriod(15303000L);
         summary.setBillToDate(1135000L);
         summary.setCostAdditionalLastPeriod(1346000L);
@@ -228,6 +244,10 @@ public class EspiFactory {
         summary.setPreviousDayOverallConsumption(summaryMeasurement);
         summary.setRatchetDemand(summaryMeasurement);
         summary.setRatchetDemandPeriod(new DateTimeInterval(1119600L, 1119600L));
+        
+        summary.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        summary.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));        
+        
 
         return summary;
     }
@@ -257,6 +277,10 @@ public class EspiFactory {
         summary.setSupplyVoltageVariations(12L);
         summary.setTempOvervoltage(13L);
 
+        summary.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        summary.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));        
+
+        
         return summary;
     }
 
@@ -272,6 +296,10 @@ public class EspiFactory {
         Subscription subscription = new Subscription();
         subscription.setUUID(UUID.randomUUID());
         subscription.setRetailCustomer(retailCustomer);
+        
+        subscription.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        subscription.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));        
+        
         return subscription;
     }
 
@@ -280,6 +308,11 @@ public class EspiFactory {
         authorization.setUUID(UUID.randomUUID());
         authorization.setAccessToken(UUID.randomUUID().toString());
         authorization.setResource("/Resource/" + UUID.randomUUID().toString());
+        
+        authorization.setCreated(new GregorianCalendar(2012, 10, 15, 0, 0, 0).getTime());
+        authorization.setUpdated(new GregorianCalendar(2012, 10, 17, 0, 0, 0));        
+        
+        
         return authorization;
     }
 

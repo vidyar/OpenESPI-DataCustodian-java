@@ -29,6 +29,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import antlr.collections.List;
+
 import java.util.UUID;
 
 import static org.junit.Assert.*;
