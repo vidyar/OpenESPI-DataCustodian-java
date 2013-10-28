@@ -19,6 +19,7 @@ package org.energyos.espi.datacustodian.service.impl;
 import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
+import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.energyos.espi.datacustodian.repositories.UsagePointRepository;
 import org.energyos.espi.datacustodian.service.UsagePointService;
@@ -44,6 +45,7 @@ public class UsagePointServiceImpl implements UsagePointService {
     private StreamMarshaller streamMarshaller;
     @Autowired
     private UsagePointRepository repository;
+
     @Autowired
     private ATOMMarshaller marshaller;
     @Autowired
@@ -92,6 +94,14 @@ public class UsagePointServiceImpl implements UsagePointService {
         }
     }
 
+    @Override
+    public UsagePoint importUsagePoint(InputStream stream) {
+        UsagePoint usagePoint = usagePointBuilder.newUsagePoint(streamMarshaller.unmarshal(stream, EntryType.class));
+        createOrReplaceByUUID(usagePoint);
+
+        return usagePoint;
+    }
+
     public void createOrReplaceByUUID(UsagePoint usagePoint) {
         repository.createOrReplaceByUUID(usagePoint);
     }
@@ -101,7 +111,7 @@ public class UsagePointServiceImpl implements UsagePointService {
     }
 
     public String exportUsagePointById(Long usagePointId) throws FeedException {
-        List<UsagePoint> usagePointList = new ArrayList<UsagePoint>();
+        List<UsagePoint> usagePointList = new ArrayList<>();
         usagePointList.add(findById(usagePointId));
 
         return marshaller.marshal(subscriptionBuilder.buildFeed(usagePointList));
@@ -114,7 +124,7 @@ public class UsagePointServiceImpl implements UsagePointService {
 
     @Override
     public UsagePoint findByUUID(UUID uuid) {
-       return repository.findByUUID(uuid);
+        return repository.findByUUID(uuid);
     }
 
     @Override
