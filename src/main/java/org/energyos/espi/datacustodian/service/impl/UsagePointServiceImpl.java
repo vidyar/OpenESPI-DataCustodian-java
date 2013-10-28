@@ -19,9 +19,11 @@ package org.energyos.espi.datacustodian.service.impl;
 import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
+import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.energyos.espi.datacustodian.repositories.UsagePointRepository;
 import org.energyos.espi.datacustodian.service.UsagePointService;
 import org.energyos.espi.datacustodian.utils.ATOMMarshaller;
+import org.energyos.espi.datacustodian.utils.StreamMarshaller;
 import org.energyos.espi.datacustodian.utils.SubscriptionBuilder;
 import org.energyos.espi.datacustodian.utils.UsagePointBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,8 @@ import java.util.UUID;
 public class UsagePointServiceImpl implements UsagePointService {
 
     @Autowired
+    private StreamMarshaller streamMarshaller;
+    @Autowired
     private UsagePointRepository repository;
     @Autowired
     private ATOMMarshaller marshaller;
@@ -53,6 +57,10 @@ public class UsagePointServiceImpl implements UsagePointService {
 
     public void setMarshaller(ATOMMarshaller marshaller) {
         this.marshaller = marshaller;
+    }
+
+    public void setStreamMarshaller(StreamMarshaller streamMarshaller) {
+        this.streamMarshaller = streamMarshaller;
     }
 
     public void setUsagePointBuilder(UsagePointBuilder usagePointBuilder) {
@@ -77,7 +85,7 @@ public class UsagePointServiceImpl implements UsagePointService {
 
     @Override
     public void importUsagePoints(InputStream stream) throws JAXBException {
-        List<UsagePoint> usagePoints = usagePointBuilder.newUsagePoints(marshaller.unmarshal(stream));
+        List<UsagePoint> usagePoints = usagePointBuilder.newUsagePoints(streamMarshaller.unmarshal(stream, FeedType.class));
 
         for (UsagePoint usagePoint : usagePoints) {
             createOrReplaceByUUID(usagePoint);
