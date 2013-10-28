@@ -20,7 +20,7 @@ import com.sun.syndication.io.FeedException;
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.atom.XMLTest;
 import org.energyos.espi.datacustodian.utils.EspiMarshaller;
-import org.energyos.espi.datacustodian.utils.StreamMarshaller;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,10 +73,10 @@ public class ElectricPowerQualitySummaryTests extends XMLTest {
 
     @Before
     public void before() throws JAXBException, FeedException {
-        StreamMarshaller streamMarshaller = new StreamMarshaller();
-        streamMarshaller.setMarshaller(marshaller);
+        XMLMarshaller XMLMarshaller = new XMLMarshaller();
+        XMLMarshaller.setMarshaller(marshaller);
 
-        electricPowerQualitySummary = streamMarshaller.unmarshal(XML_INPUT, ElectricPowerQualitySummary.class);
+        electricPowerQualitySummary = XMLMarshaller.unmarshal(XML_INPUT, ElectricPowerQualitySummary.class);
         xml = EspiMarshaller.marshal(newElectricPowerQualitySummaryWithUsagePoint());
     }
 

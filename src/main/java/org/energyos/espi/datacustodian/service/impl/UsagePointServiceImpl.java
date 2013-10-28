@@ -24,9 +24,9 @@ import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.energyos.espi.datacustodian.repositories.UsagePointRepository;
 import org.energyos.espi.datacustodian.service.UsagePointService;
 import org.energyos.espi.datacustodian.utils.ATOMMarshaller;
-import org.energyos.espi.datacustodian.utils.StreamMarshaller;
 import org.energyos.espi.datacustodian.utils.SubscriptionBuilder;
 import org.energyos.espi.datacustodian.utils.UsagePointBuilder;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ import java.util.UUID;
 public class UsagePointServiceImpl implements UsagePointService {
 
     @Autowired
-    private StreamMarshaller streamMarshaller;
+    private XMLMarshaller XMLMarshaller;
     @Autowired
     private UsagePointRepository repository;
 
@@ -61,8 +61,8 @@ public class UsagePointServiceImpl implements UsagePointService {
         this.marshaller = marshaller;
     }
 
-    public void setStreamMarshaller(StreamMarshaller streamMarshaller) {
-        this.streamMarshaller = streamMarshaller;
+    public void setXMLMarshaller(XMLMarshaller XMLMarshaller) {
+        this.XMLMarshaller = XMLMarshaller;
     }
 
     public void setUsagePointBuilder(UsagePointBuilder usagePointBuilder) {
@@ -87,7 +87,7 @@ public class UsagePointServiceImpl implements UsagePointService {
 
     @Override
     public void importUsagePoints(InputStream stream) throws JAXBException {
-        List<UsagePoint> usagePoints = usagePointBuilder.newUsagePoints(streamMarshaller.unmarshal(stream, FeedType.class));
+        List<UsagePoint> usagePoints = usagePointBuilder.newUsagePoints(XMLMarshaller.unmarshal(stream, FeedType.class));
 
         for (UsagePoint usagePoint : usagePoints) {
             createOrReplaceByUUID(usagePoint);
@@ -96,7 +96,7 @@ public class UsagePointServiceImpl implements UsagePointService {
 
     @Override
     public UsagePoint importUsagePoint(InputStream stream) {
-        UsagePoint usagePoint = usagePointBuilder.newUsagePoint(streamMarshaller.unmarshal(stream, EntryType.class));
+        UsagePoint usagePoint = usagePointBuilder.newUsagePoint(XMLMarshaller.unmarshal(stream, EntryType.class));
         createOrReplaceByUUID(usagePoint);
 
         return usagePoint;

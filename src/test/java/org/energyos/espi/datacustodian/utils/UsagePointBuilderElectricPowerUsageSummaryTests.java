@@ -40,7 +40,7 @@ import static org.junit.Assert.assertNotNull;
 public class UsagePointBuilderElectricPowerUsageSummaryTests {
 
     @Autowired
-    private StreamMarshaller marshaller;
+    private XMLMarshaller marshaller;
     private ElectricPowerUsageSummary electricPowerUsageSummary;
     private UsagePoint usagePoint;
 

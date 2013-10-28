@@ -40,7 +40,7 @@ import static org.junit.Assert.assertNotNull;
 public class UsagePointBuilderIntervalBlockTests {
 
     @Autowired
-    private StreamMarshaller marshaller;
+    private XMLMarshaller marshaller;
     private IntervalBlock firstIntervalBlock;
     private IntervalBlock secondIntervalBlock;
 

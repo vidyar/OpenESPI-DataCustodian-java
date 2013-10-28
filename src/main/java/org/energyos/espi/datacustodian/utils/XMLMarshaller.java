@@ -30,7 +30,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 @Component
-public class StreamMarshaller {
+public class XMLMarshaller {
 
     @Autowired
     @Qualifier("atomMarshaller")
@@ -51,14 +51,6 @@ public class StreamMarshaller {
 
         return sw.toString();
     }
-
-//    public String marshal(Feed feed) throws FeedException {
-//        return StringEscapeUtils.unescapeXml(new WireFeedOutput().outputString(feed));
-//    }
-//
-//    public String marshal(TimeConfiguration timeConfiguration) {
-//        return StringEscapeUtils.unescapeXml(new WireFeedOutput().outputString(timeConfiguration));
-//    }
 
     public void setMarshaller(Jaxb2Marshaller marshaller) {
         this.marshaller = marshaller;

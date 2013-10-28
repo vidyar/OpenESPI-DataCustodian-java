@@ -40,7 +40,7 @@ import static org.junit.Assert.assertNotNull;
 public class UsagePointBuilderTimeConfigurationTests {
 
     @Autowired
-    private StreamMarshaller marshaller;
+    private XMLMarshaller marshaller;
     private TimeConfiguration timeConfiguration;
 
     @Before

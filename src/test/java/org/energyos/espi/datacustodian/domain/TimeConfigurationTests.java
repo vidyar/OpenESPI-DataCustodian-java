@@ -19,7 +19,7 @@ package org.energyos.espi.datacustodian.domain;
 import com.sun.syndication.io.FeedException;
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.atom.XMLTest;
-import org.energyos.espi.datacustodian.utils.StreamMarshaller;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +58,10 @@ public class TimeConfigurationTests extends XMLTest {
                     "</LocalTimeParameters>";
 
     private TimeConfiguration timeConfiguration() throws JAXBException {
-        StreamMarshaller streamMarshaller = new StreamMarshaller();
-        streamMarshaller.setMarshaller(marshaller);
+        XMLMarshaller XMLMarshaller = new XMLMarshaller();
+        XMLMarshaller.setMarshaller(marshaller);
 
-        return streamMarshaller.unmarshal(XML_INPUT, TimeConfiguration.class);
+        return XMLMarshaller.unmarshal(XML_INPUT, TimeConfiguration.class);
     }
 
     @Test
@@ -115,9 +115,9 @@ public class TimeConfigurationTests extends XMLTest {
     }
 
     private String xmlResult() throws FeedException {
-        StreamMarshaller streamMarshaller = new StreamMarshaller();
-        streamMarshaller.setMarshaller(marshaller);
+        XMLMarshaller XMLMarshaller = new XMLMarshaller();
+        XMLMarshaller.setMarshaller(marshaller);
 
-        return streamMarshaller.marshal(newTimeConfigurationWithUsagePoint());
+        return XMLMarshaller.marshal(newTimeConfigurationWithUsagePoint());
     }
 }

@@ -18,7 +18,7 @@ package org.energyos.espi.datacustodian.domain;
 
 import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.atom.XMLTest;
-import org.energyos.espi.datacustodian.utils.StreamMarshaller;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,9 +49,9 @@ public class UsagePointUnmarshallerTests extends XMLTest {
 
     @Before
     public void before() throws JAXBException, FeedException {
-        StreamMarshaller streamMarshaller = new StreamMarshaller();
-        streamMarshaller.setMarshaller(marshaller);
-        usagePoint = streamMarshaller.unmarshal(XML_INPUT, UsagePoint.class);
+        XMLMarshaller XMLMarshaller = new XMLMarshaller();
+        XMLMarshaller.setMarshaller(marshaller);
+        usagePoint = XMLMarshaller.unmarshal(XML_INPUT, UsagePoint.class);
     }
 
     @Test

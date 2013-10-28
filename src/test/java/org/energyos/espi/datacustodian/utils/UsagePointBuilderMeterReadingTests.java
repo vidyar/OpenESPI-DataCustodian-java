@@ -41,7 +41,7 @@ import static org.junit.Assert.assertNotNull;
 public class UsagePointBuilderMeterReadingTests {
 
     @Autowired
-    private StreamMarshaller marshaller;
+    private XMLMarshaller marshaller;
     private MeterReading meterReading;
 
     @Before

@@ -16,7 +16,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class StreamMarshallerTest extends BaseTest {
+public class XMLMarshallerTest extends BaseTest {
     @Mock
     Jaxb2Marshaller marshaller;
 
@@ -24,28 +24,28 @@ public class StreamMarshallerTest extends BaseTest {
     public void unmarshalStream_returnsEntryType() {
         InputStream inputStream = mock(InputStream.class);
 
-        StreamMarshaller streamMarshaller = new StreamMarshaller();
-        streamMarshaller.setMarshaller(marshaller);
+        XMLMarshaller XMLMarshaller = new XMLMarshaller();
+        XMLMarshaller.setMarshaller(marshaller);
 
         JAXBElement jaxbElement = mock(JAXBElement.class);
         EntryType entryType = new EntryType();
         when(jaxbElement.getValue()).thenReturn(entryType);
         when(marshaller.unmarshal(any(StreamSource.class))).thenReturn(jaxbElement);
 
-        assertThat(streamMarshaller.unmarshal(inputStream, EntryType.class), is(entryType));
+        assertThat(XMLMarshaller.unmarshal(inputStream, EntryType.class), is(entryType));
     }
 
     @Test
     public void unmarshalString_returnsEntryType() {
-        StreamMarshaller streamMarshaller = new StreamMarshaller();
-        streamMarshaller.setMarshaller(marshaller);
+        XMLMarshaller XMLMarshaller = new XMLMarshaller();
+        XMLMarshaller.setMarshaller(marshaller);
 
         JAXBElement jaxbElement = mock(JAXBElement.class);
         EntryType entryType = new EntryType();
         when(jaxbElement.getValue()).thenReturn(entryType);
         when(marshaller.unmarshal(any(StreamSource.class))).thenReturn(jaxbElement);
 
-        assertThat(streamMarshaller.unmarshal("String", EntryType.class), is(entryType));
+        assertThat(XMLMarshaller.unmarshal("String", EntryType.class), is(entryType));
     }
 
 

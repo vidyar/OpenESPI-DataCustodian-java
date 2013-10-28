@@ -24,9 +24,9 @@ import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.energyos.espi.datacustodian.repositories.UsagePointRepository;
 import org.energyos.espi.datacustodian.utils.ATOMMarshaller;
-import org.energyos.espi.datacustodian.utils.StreamMarshaller;
 import org.energyos.espi.datacustodian.utils.SubscriptionBuilder;
 import org.energyos.espi.datacustodian.utils.UsagePointBuilder;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class UsagePointServiceImplTests {
 
     private UsagePointServiceImpl service;
     private UsagePointRepository repository;
-    private StreamMarshaller streamMarshaller;
+    private XMLMarshaller XMLMarshaller;
     private UsagePointBuilder usagePointBuilder;
     private ATOMMarshaller marshaller;
 
@@ -57,14 +57,14 @@ public class UsagePointServiceImplTests {
     public void setup() {
         repository = mock(UsagePointRepository.class);
         marshaller = mock(ATOMMarshaller.class);
-        streamMarshaller = mock(StreamMarshaller.class);
+        XMLMarshaller = mock(XMLMarshaller.class);
         usagePointBuilder = mock(UsagePointBuilder.class);
 
         service = new UsagePointServiceImpl();
         service.setRepository(repository);
         service.setUsagePointBuilder(usagePointBuilder);
         service.setMarshaller(marshaller);
-        service.setStreamMarshaller(streamMarshaller);
+        service.setXMLMarshaller(XMLMarshaller);
 
         usagePoint = EspiFactory.newUsagePoint();
         usagePoint.setId(989879L);
@@ -121,7 +121,7 @@ public class UsagePointServiceImplTests {
         InputStream inputStream = mock(InputStream.class);
         EntryType entryType = new EntryType();
 
-        when(streamMarshaller.unmarshal(inputStream, EntryType.class)).thenReturn(entryType);
+        when(XMLMarshaller.unmarshal(inputStream, EntryType.class)).thenReturn(entryType);
         when(usagePointBuilder.newUsagePoint(entryType)).thenReturn(usagePoint);
 
         UsagePoint returnedUsagePoint = service.importUsagePoint(inputStream);
