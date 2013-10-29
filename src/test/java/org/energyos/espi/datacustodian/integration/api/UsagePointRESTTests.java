@@ -20,10 +20,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -151,6 +153,135 @@ public class UsagePointRESTTests {
                         "        <kind>0</kind>" +
                         "      </ServiceCategory>" +
                         "    </MeterReading>" +
+                        "  </content>" +
+                        "</entry>"))
+                .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    public void update_updatesUsagePoint() throws Exception {
+        UsagePoint usagePoint = EspiFactory.newUsagePoint(retailCustomer);
+        usagePointService.persist(usagePoint);
+
+        mockMvc.perform(put("/espi/1_1/resource/RetailCustomer/" + retailCustomer.getId() + "/UsagePoint/" + usagePoint.getHashedId()).contentType(MediaType.APPLICATION_ATOM_XML)
+                .content("<entry xmlns=\"http://www.w3.org/2005/Atom\">" +
+                        "  <id>urn:uuid:"+ usagePoint.getUUID() + "</id>" +
+                        "  <published>2012-10-24T00:00:00Z</published>" +
+                        "  <updated>2012-10-24T00:00:00Z</updated>" +
+                        "  <link rel=\"self\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01\"/>" +
+                        "  <link rel=\"up\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/MeterReading\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/ElectricPowerUsageSummary\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/UsagePoint/01/LocalTimeParameters/01\"/>" +
+                        "  <title>Our House</title>" +
+                        "  <content>" +
+                        "    <UsagePoint xmlns=\"http://naesb.org/espi\">" +
+                        "      <ServiceCategory>" +
+                        "        <kind>0</kind>" +
+                        "      </ServiceCategory>" +
+                        "    </UsagePoint>" +
+                        "  </content>" +
+                        "</entry>"))
+                .andExpect(status().isOk());
+
+        assertThat(usagePointService.findByHashedId(usagePoint.getHashedId()).getDescription(), equalTo("Our House"));
+    }
+
+    @Test
+    public void update_returnsBadRequestForInvalidUsagePointId() throws Exception {
+        RetailCustomer otherCustomer = EspiFactory.newRetailCustomer();
+        retailCustomerService.persist(otherCustomer);
+        UsagePoint otherUsagePoint = EspiFactory.newUsagePoint(otherCustomer);
+        usagePointService.persist(otherUsagePoint);
+
+        mockMvc.perform(put("/espi/1_1/resource/RetailCustomer/" +retailCustomer.getId() + "/UsagePoint/" + otherUsagePoint.getHashedId()).contentType(MediaType.APPLICATION_ATOM_XML)
+                .content("<entry xmlns=\"http://www.w3.org/2005/Atom\">" +
+                        "  <id>urn:uuid:"+ otherUsagePoint.getUUID() + "</id>" +
+                        "  <published>2012-10-24T00:00:00Z</published>" +
+                        "  <updated>2012-10-24T00:00:00Z</updated>" +
+                        "  <link rel=\"self\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01\"/>" +
+                        "  <link rel=\"up\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/MeterReading\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/ElectricPowerUsageSummary\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/UsagePoint/01/LocalTimeParameters/01\"/>" +
+                        "  <title>Our House</title>" +
+                        "  <content>" +
+                        "    <UsagePoint xmlns=\"http://naesb.org/espi\">" +
+                        "      <ServiceCategory>" +
+                        "        <kind>0</kind>" +
+                        "      </ServiceCategory>" +
+                        "    </UsagePoint>" +
+                        "  </content>" +
+                        "</entry>"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void update_returnsNotFoundForUnknownUsagePointId() throws Exception {
+        mockMvc.perform(put("/espi/1_1/resource/RetailCustomer/" + retailCustomer.getId() + "/UsagePoint/42").contentType(MediaType.APPLICATION_ATOM_XML)
+                .content("<entry xmlns=\"http://www.w3.org/2005/Atom\">" +
+                        "  <id>urn:uuid:97EAEBAD-1214-4A58-A3D4-A16A6DE718E1</id>" +
+                        "  <published>2012-10-24T00:00:00Z</published>" +
+                        "  <updated>2012-10-24T00:00:00Z</updated>" +
+                        "  <link rel=\"self\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01\"/>" +
+                        "  <link rel=\"up\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/MeterReading\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/ElectricPowerUsageSummary\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/UsagePoint/01/LocalTimeParameters/01\"/>" +
+                        "  <title>Our House</title>" +
+                        "  <content>" +
+                        "    <UsagePoint xmlns=\"http://naesb.org/espi\">" +
+                        "      <ServiceCategory>" +
+                        "        <kind>0</kind>" +
+                        "      </ServiceCategory>" +
+                        "    </UsagePoint>" +
+                        "  </content>" +
+                        "</entry>"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void update_returnsMethodNotAllowedForInvalidUsagePointId() throws Exception {
+        UsagePoint usagePoint = EspiFactory.newUsagePoint(retailCustomer);
+        usagePointService.persist(usagePoint);
+
+        mockMvc.perform(put("/espi/1_1/resource/RetailCustomer/" + retailCustomer.getId() + "/UsagePoint/" + usagePoint.getHashedId()).contentType(MediaType.APPLICATION_ATOM_XML)
+                .content("<entry xmlns=\"http://www.w3.org/2005/Atom\">" +
+                        "  <id>urn:uuid:97EAEBAD-1214-4A58-A3D4-A16A6DE718E1</id>" +
+                        "  <published>2012-10-24T00:00:00Z</published>" +
+                        "  <updated>2012-10-24T00:00:00Z</updated>" +
+                        "  <link rel=\"self\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01\"/>" +
+                        "  <link rel=\"up\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/MeterReading\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/ElectricPowerUsageSummary\"/>" +
+                        "  <link rel=\"related\"" +
+                        "        href=\"/espi/1_1/resource/UsagePoint/01/LocalTimeParameters/01\"/>" +
+                        "  <title></title>" +
+                        "  <content>" +
+                        "    <UsagePoint xmlns=\"http://naesb.org/espi\">" +
+                        "      <ServiceCategory>" +
+                        "        <kind>0</kind>" +
+                        "      </ServiceCategory>" +
+                        "    </UsagePoint>" +
                         "  </content>" +
                         "</entry>"))
                 .andExpect(status().isMethodNotAllowed());

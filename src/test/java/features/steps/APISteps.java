@@ -1,11 +1,13 @@
 package features.steps;
 
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.domain.Routes;
 import org.openqa.selenium.WebDriver;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
 import org.xml.sax.SAXException;
 
@@ -81,9 +83,46 @@ public class APISteps {
         assertThat(response, is(nullValue()));
     }
 
+    @And("^I PUT \\/espi\\/1_1\\/resource\\/RetailCustomer\\/\\{RetailCustomerID\\}\\/UsagePoint\\/\\{UsagePointID\\}$")
+    public void I_PUT_espi__resource_RetailCustomer_RetailCustomerID_UsagePoint_UsagePointID() throws Throwable {
+        RestTemplate rest = new RestTemplate();
+        String requestBody = "<entry xmlns=\"http://www.w3.org/2005/Atom\">>" +
+                "  <id>urn:uuid:97EAEBAD-1214-4A58-A3D4-A16A6DE718E1</id>" +
+                "  <published>2012-10-24T00:00:00Z</published>" +
+                "  <updated>2012-10-24T00:00:00Z</updated>" +
+                "  <link rel=\"self\"" +
+                "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01\"/>" +
+                "  <link rel=\"up\"" +
+                "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint\"/>" +
+                "  <link rel=\"related\"" +
+                "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/MeterReading\"/>" +
+                "  <link rel=\"related\"" +
+                "        href=\"/espi/1_1/resource/RetailCustomer/9b6c7063/UsagePoint/01/ElectricPowerUsageSummary\"/>" +
+                "  <link rel=\"related\"" +
+                "        href=\"/espi/1_1/resource/UsagePoint/01/LocalTimeParameters/01\"/>" +
+                "  <title>Our House</title>" +
+                "  <content>" +
+                "    <UsagePoint xmlns=\"http://naesb.org/espi\">" +
+                "      <ServiceCategory>" +
+                "        <kind>1</kind>" +
+                "      </ServiceCategory>" +
+                "    </UsagePoint>" +
+                "  </content>" +
+                "</entry>";
+        HttpEntity<String> request = new HttpEntity<String>(requestBody);
+        rest.put(StepUtils.BASE_URL + "/espi/1_1/resource/RetailCustomer/1/UsagePoint/1", request);
+    }
+
     @Then("^I should see a new Usage Point$")
     public void I_should_see_a_new_Usage_Point() throws Throwable {
         clickLinkByText("Usage Points");
         assertContains("my house", driver.getPageSource());
     }
+
+    @Then("^I should see an updated Usage Point$")
+    public void I_should_see_an_updated_Usage_Point() throws Throwable {
+        clickLinkByText("Usage Points");
+        assertContains("Our House", driver.getPageSource());
+    }
+
 }
