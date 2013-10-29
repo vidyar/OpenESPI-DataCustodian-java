@@ -95,7 +95,7 @@ public class IdentifiedObject
     protected GregorianCalendar published;
 
     public Long getId() {
-        return id;
+        `return id;
     }
 
     public void setId(Long id) {

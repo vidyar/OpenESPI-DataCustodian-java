@@ -31,7 +31,7 @@ public class EntryBuilder {
         entry.setId("urn:uuid:" + usagePoint.getUUID().toString());
         entry.setTitle(usagePoint.getDescription());
         entry.setPublished(DateConverter.toDateTimeType(usagePoint.getCreated()));
-        entry.setUpdated(DateConverter.toDateTimeType(usagePoint.getUpdated()));
+        entry.setUpdated(DateConverter.toDateTimeType(usagePoint.getUpdated().getTime()));
 
         buildLinks(usagePoint);
     }
