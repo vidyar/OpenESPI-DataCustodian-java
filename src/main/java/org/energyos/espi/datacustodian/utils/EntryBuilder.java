@@ -1,11 +1,13 @@
-package org.energyos.espi.datacustodian.web.api;
+package org.energyos.espi.datacustodian.utils;
 
 import org.energyos.espi.datacustodian.domain.UsagePoint;
 import org.energyos.espi.datacustodian.models.atom.ContentType;
 import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.LinkType;
 import org.energyos.espi.datacustodian.utils.DateConverter;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EntryBuilder {
 
     private EntryType entry;

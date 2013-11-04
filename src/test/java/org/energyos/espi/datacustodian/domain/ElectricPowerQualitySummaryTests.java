@@ -19,7 +19,6 @@ package org.energyos.espi.datacustodian.domain;
 import com.sun.syndication.io.FeedException;
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.atom.XMLTest;
-import org.energyos.espi.datacustodian.utils.EspiMarshaller;
 import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,13 +70,13 @@ public class ElectricPowerQualitySummaryTests extends XMLTest {
     @Qualifier("atomMarshaller")
     private Jaxb2Marshaller marshaller;
 
+    @Autowired
+    XMLMarshaller xmlMarshaller;
+
     @Before
     public void before() throws JAXBException, FeedException {
-        XMLMarshaller xmlMarshaller = new XMLMarshaller();
-        xmlMarshaller.setMarshaller(marshaller);
-
         electricPowerQualitySummary = xmlMarshaller.unmarshal(XML_INPUT, ElectricPowerQualitySummary.class);
-        xml = EspiMarshaller.marshal(newElectricPowerQualitySummaryWithUsagePoint());
+        xml = xmlMarshaller.marshal(newElectricPowerQualitySummaryWithUsagePoint());
     }
 
     @Test

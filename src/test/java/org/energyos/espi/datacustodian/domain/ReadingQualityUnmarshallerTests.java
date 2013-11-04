@@ -17,15 +17,18 @@
 package org.energyos.espi.datacustodian.domain;
 
 import org.energyos.espi.datacustodian.atom.XMLTest;
-import org.energyos.espi.datacustodian.models.atom.adapters.ReadingQualityAdapter;
-import org.energyos.espi.datacustodian.utils.EspiMarshaller;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.xml.bind.JAXBElement;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/spring/test-context.xml")
 public class ReadingQualityUnmarshallerTests extends XMLTest {
 
     static final String XML_INPUT =
@@ -33,12 +36,12 @@ public class ReadingQualityUnmarshallerTests extends XMLTest {
                 "<quality>quality1</quality>" +
             "</ReadingQuality>";
     private ReadingQuality readingQuality;
+    @Autowired
+    XMLMarshaller xmlMarshaller;
 
     @Before
     public void before() throws Exception {
-        ReadingQualityAdapter intervalBlockAdapter = new ReadingQualityAdapter();
-        JAXBElement<ReadingQuality> readingQualityJAXBElement = EspiMarshaller.unmarshal(XML_INPUT);
-        readingQuality = intervalBlockAdapter.unmarshal(readingQualityJAXBElement);
+        readingQuality = xmlMarshaller.unmarshal(XML_INPUT, ReadingQuality.class);
     }
 
     @Test

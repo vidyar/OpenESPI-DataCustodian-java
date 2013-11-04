@@ -264,7 +264,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://naesb.org/espi", name = "IntervalBlock")
     public JAXBElement<IntervalBlock> createIntervalBlock(IntervalBlock value) {
-        return new JAXBElement<IntervalBlock>(IntervalBlock_QNAME, IntervalBlock.class, null, value);
+        return new JAXBElement<>(IntervalBlock_QNAME, IntervalBlock.class, null, value);
     }
 
     /**

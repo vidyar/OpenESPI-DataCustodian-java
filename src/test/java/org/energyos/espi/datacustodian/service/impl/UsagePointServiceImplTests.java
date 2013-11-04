@@ -17,7 +17,6 @@
 package org.energyos.espi.datacustodian.service.impl;
 
 
-import com.sun.syndication.feed.atom.Feed;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.Subscription;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
@@ -25,10 +24,10 @@ import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.energyos.espi.datacustodian.repositories.UsagePointRepository;
 import org.energyos.espi.datacustodian.utils.ATOMMarshaller;
-import org.energyos.espi.datacustodian.utils.SubscriptionBuilder;
 import org.energyos.espi.datacustodian.utils.UsagePointBuilder;
 import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
+import org.energyos.espi.datacustodian.utils.FeedBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -136,41 +135,41 @@ public class UsagePointServiceImplTests {
         RetailCustomer customer = new RetailCustomer();
         customer.setId(1L);
 
-        SubscriptionBuilder subscriptionBuilder = mock(SubscriptionBuilder.class);
+        FeedBuilder feedBuilder = mock(FeedBuilder.class);
 
-        service.setSubscriptionBuilder(subscriptionBuilder);
+        service.setFeedBuilder(feedBuilder);
 
-        Feed atomFeed = mock(Feed.class);
+        FeedType atomFeed = mock(FeedType.class);
 
         List<UsagePoint> usagePointList = new ArrayList<UsagePoint>();
         String atomFeedResult = "<?xml version=\"1.0\"?><feed></feed>";
 
 
-        when(subscriptionBuilder.buildFeed(usagePointList)).thenReturn(atomFeed);
-        when(marshaller.marshal(atomFeed)).thenReturn(atomFeedResult);
+        when(feedBuilder.build(usagePointList)).thenReturn(atomFeed);
+        when(xmlMarshaller.marshal(atomFeed)).thenReturn(atomFeedResult);
 
         assertEquals(atomFeedResult, service.exportUsagePoints(customer));
-        verify(subscriptionBuilder).buildFeed(usagePointList);
-        verify(marshaller).marshal(atomFeed);
+        verify(feedBuilder).build(usagePointList);
+        verify(xmlMarshaller).marshal(atomFeed);
     }
 
     @Test
     public void exportUsagePointById() throws Exception {
         Long usagePointId = 1L;
-        SubscriptionBuilder subscriptionBuilder = mock(SubscriptionBuilder.class);
+        FeedBuilder feedBuilder = mock(FeedBuilder.class);
 
-        service.setSubscriptionBuilder(subscriptionBuilder);
+        service.setFeedBuilder(feedBuilder);
 
-        Feed atomFeed = mock(Feed.class);
+        FeedType atomFeed = mock(FeedType.class);
 
         String atomFeedResult = "<?xml version=\"1.0\"?><feed></feed>";
 
-        when(subscriptionBuilder.buildFeed(anyListOf(UsagePoint.class))).thenReturn(atomFeed);
-        when(marshaller.marshal(atomFeed)).thenReturn(atomFeedResult);
+        when(feedBuilder.build(anyListOf(UsagePoint.class))).thenReturn(atomFeed);
+        when(xmlMarshaller.marshal(atomFeed)).thenReturn(atomFeedResult);
 
         assertEquals(atomFeedResult, service.exportUsagePointById(usagePointId));
-        verify(subscriptionBuilder).buildFeed(anyListOf(UsagePoint.class));
-        verify(marshaller).marshal(atomFeed);
+        verify(feedBuilder).build(anyListOf(UsagePoint.class));
+        verify(xmlMarshaller).marshal(atomFeed);
     }
 
     @Test

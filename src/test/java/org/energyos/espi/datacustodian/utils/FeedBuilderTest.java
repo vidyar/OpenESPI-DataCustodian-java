@@ -1,4 +1,4 @@
-package org.energyos.espi.datacustodian.web.api;
+package org.energyos.espi.datacustodian.utils;
 /*
  * Copyright 2013 EnergyOS.org
  *
@@ -16,38 +16,27 @@ package org.energyos.espi.datacustodian.web.api;
  */
 
 import org.energyos.espi.datacustodian.domain.UsagePoint;
-import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
-import org.junit.Test;
+import org.junit.Before;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newUsagePoint;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FeedBuilderTest {
 
-    @Test
-    public void build() throws Exception {
+    private UsagePoint originalUsagePoint;
+    private FeedType feed;
+
+    @Before
+    public void before() {
         FeedBuilder feedBuilder = new FeedBuilder();
-        UsagePoint originalUsagePoint = newUsagePoint();
+        originalUsagePoint = newUsagePoint();
         List<UsagePoint> usagePointList = new ArrayList<>();
         usagePointList.add(originalUsagePoint);
 
-        FeedType feed = feedBuilder.build(usagePointList);
-
-        assertThat(originalUsagePoint, is(feed.getEntries().get(0).getContent().getUsagePoint()));
+        feed = feedBuilder.build(usagePointList);
     }
 
-    @Test
-    public void buildEntry() throws Exception {
-        FeedBuilder feedBuilder = new FeedBuilder();
-        UsagePoint usagePoint = newUsagePoint();
-
-        EntryType entry = feedBuilder.buildEntry(usagePoint);
-
-        assertThat(entry.getContent().getUsagePoint(), is(usagePoint));
-    }
 }

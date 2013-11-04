@@ -1,4 +1,4 @@
-package org.energyos.espi.datacustodian.web.api;
+package org.energyos.espi.datacustodian.utils;
 /*
  * Copyright 2013 EnergyOS.org
  *
@@ -15,9 +15,7 @@ package org.energyos.espi.datacustodian.web.api;
  *    limitations under the License.
  */
 
-import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
-import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +25,7 @@ import java.util.List;
 public class FeedBuilder {
     private FeedType feed;
 
-    public FeedType build(List<UsagePoint> usagePointList) throws FeedException {
+    public FeedType build(List<UsagePoint> usagePointList) {
         feed = new FeedType();
 
         populateEntries(usagePointList);
@@ -35,13 +33,9 @@ public class FeedBuilder {
         return feed;
     }
 
-    private void populateEntries(List<UsagePoint> usagePointList) throws FeedException {
+    private void populateEntries(List<UsagePoint> usagePointList) {
         for (UsagePoint usagePoint : usagePointList) {
             feed.getEntries().add(new EntryBuilder().build(usagePoint));
         }
-    }
-
-    public EntryType buildEntry(UsagePoint usagePoint) {
-        return new EntryBuilder().build(usagePoint);
     }
 }

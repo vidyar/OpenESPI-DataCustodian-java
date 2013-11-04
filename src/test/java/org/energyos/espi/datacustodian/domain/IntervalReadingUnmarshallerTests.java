@@ -18,14 +18,20 @@ package org.energyos.espi.datacustodian.domain;
 
 import org.energyos.espi.datacustodian.atom.XMLTest;
 import org.energyos.espi.datacustodian.models.atom.adapters.IntervalReadingAdapter;
-import org.energyos.espi.datacustodian.utils.EspiMarshaller;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.xml.bind.JAXBElement;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/spring/test-context.xml")
 public class IntervalReadingUnmarshallerTests extends XMLTest {
 
     static final String XML_INPUT =
@@ -46,11 +52,23 @@ public class IntervalReadingUnmarshallerTests extends XMLTest {
 
     private IntervalReading intervalReading;
 
+    @Autowired
+    XMLMarshaller xmlMarshaller;
+
     @Before
     public void before() throws Exception {
-        IntervalReadingAdapter intervalReadingAdapter = new IntervalReadingAdapter();
-        JAXBElement<IntervalReading> intervalReadingJAXBElement = EspiMarshaller.unmarshal(XML_INPUT);
-        intervalReading = intervalReadingAdapter.unmarshal(intervalReadingJAXBElement);
+        intervalReading = xmlMarshaller.unmarshal(XML_INPUT, IntervalReading.class);
+        callAdapterOnRootElement();
+    }
+
+    private void callAdapterOnRootElement() throws Exception {
+        // JAXB doesn't seem to call XMLTypeAdapters for the root element.
+        // Therefore, we're calling it manually.
+        // The best resource we could find: https://java.net/jira/browse/JAXB-117
+        // IZ/BK 11/04/2013
+        IntervalReadingAdapter interval = new IntervalReadingAdapter();
+        JAXBElement<IntervalReading> jaxbElement = new ObjectFactory().createIntervalReading(intervalReading);
+        intervalReading = interval.unmarshal(jaxbElement);
     }
 
     @Test

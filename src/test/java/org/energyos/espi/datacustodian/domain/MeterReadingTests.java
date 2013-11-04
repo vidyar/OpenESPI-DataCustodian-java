@@ -19,8 +19,12 @@ package org.energyos.espi.datacustodian.domain;
 import com.sun.syndication.io.FeedException;
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.atom.XMLTest;
-import org.energyos.espi.datacustodian.utils.EspiMarshaller;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;
@@ -32,18 +36,23 @@ import static org.energyos.espi.datacustodian.support.TestUtils.assertAnnotation
 import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newMeterReadingWithUsagePoint;
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/spring/test-context.xml")
 public class MeterReadingTests extends XMLTest {
+
+    @Autowired
+    XMLMarshaller xmlMarshaller;
 
     @Test
     public void unmarshalsMeterReading() throws SAXException, IOException, XpathException, FeedException, JAXBException {
         final String XML_INPUT = "<MeterReading xmlns=\"http://naesb.org/espi\"/>";
 
-        assertEquals(MeterReading.class, EspiMarshaller.unmarshal(XML_INPUT).getValue().getClass());
+        assertEquals(MeterReading.class, xmlMarshaller.unmarshal(XML_INPUT, MeterReading.class).getClass());
     }
 
     @Test
     public void marshalsMeterReading() throws SAXException, IOException, XpathException, FeedException {
-        assertXpathExists("espi:MeterReading", EspiMarshaller.marshal(newMeterReadingWithUsagePoint()));
+        assertXpathExists("espi:MeterReading", xmlMarshaller.marshal(newMeterReadingWithUsagePoint()));
     }
 
     @Test

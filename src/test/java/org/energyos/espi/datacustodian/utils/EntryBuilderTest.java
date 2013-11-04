@@ -1,4 +1,4 @@
-package org.energyos.espi.datacustodian.web.api;
+package org.energyos.espi.datacustodian.utils;
 /*
  * Copyright 2013 EnergyOS.org
  *
@@ -19,6 +19,7 @@ import org.energyos.espi.datacustodian.domain.UsagePoint;
 import org.energyos.espi.datacustodian.models.atom.DateTimeType;
 import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.LinkType;
+import org.energyos.espi.datacustodian.utils.EntryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,6 +39,12 @@ public class EntryBuilderTest {
         usagePoint = newUsagePoint();
         entryType = new EntryBuilder().build(usagePoint);
     }
+
+    @Test
+    public void buildEntry() throws Exception {
+        assertThat(entryType.getContent().getUsagePoint(), is(usagePoint));
+    }
+
     @Test
     public void id() {
         assertThat(entryType.getId(), is("urn:uuid:" + usagePoint.getUUID()));

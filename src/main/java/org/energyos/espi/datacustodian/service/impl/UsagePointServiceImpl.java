@@ -28,6 +28,7 @@ import org.energyos.espi.datacustodian.utils.ATOMMarshaller;
 import org.energyos.espi.datacustodian.utils.SubscriptionBuilder;
 import org.energyos.espi.datacustodian.utils.UsagePointBuilder;
 import org.energyos.espi.datacustodian.utils.XMLMarshaller;
+import org.energyos.espi.datacustodian.utils.FeedBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +53,8 @@ public class UsagePointServiceImpl implements UsagePointService {
     private UsagePointBuilder usagePointBuilder;
     @Autowired
     private SubscriptionBuilder subscriptionBuilder;
+    @Autowired
+    private FeedBuilder feedBuilder;
 
     public void setRepository(UsagePointRepository repository) {
         this.repository = repository;
@@ -112,7 +115,7 @@ public class UsagePointServiceImpl implements UsagePointService {
 
     @Override
     public String exportUsagePoints(RetailCustomer customer) throws FeedException {
-        return marshaller.marshal(subscriptionBuilder.buildFeed(findAllByRetailCustomer(customer)));
+        return xmlMarshaller.marshal(feedBuilder.build(findAllByRetailCustomer(customer)));
     }
 
     @Override
@@ -120,7 +123,7 @@ public class UsagePointServiceImpl implements UsagePointService {
         List<UsagePoint> usagePointList = new ArrayList<>();
         usagePointList.add(findById(usagePointId));
 
-        return marshaller.marshal(subscriptionBuilder.buildFeed(usagePointList));
+        return xmlMarshaller.marshal(feedBuilder.build(usagePointList));
     }
 
     @Override
@@ -149,5 +152,9 @@ public class UsagePointServiceImpl implements UsagePointService {
         if (usagePoint != null) {
             repository.deleteById(usagePoint.getId());
         }
+    }
+
+    public void setFeedBuilder(FeedBuilder feedBuilder) {
+        this.feedBuilder = feedBuilder;
     }
 }

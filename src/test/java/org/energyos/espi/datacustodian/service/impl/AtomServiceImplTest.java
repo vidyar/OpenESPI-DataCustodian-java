@@ -1,4 +1,4 @@
-package org.energyos.espi.datacustodian.web.api.impl;
+package org.energyos.espi.datacustodian.service.impl;
 /*
  * Copyright 2013 EnergyOS.org
  *
@@ -18,8 +18,10 @@ package org.energyos.espi.datacustodian.web.api.impl;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
 import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
+import org.energyos.espi.datacustodian.service.impl.AtomServiceImpl;
 import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
-import org.energyos.espi.datacustodian.web.api.FeedBuilder;
+import org.energyos.espi.datacustodian.utils.EntryBuilder;
+import org.energyos.espi.datacustodian.utils.FeedBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -38,6 +40,10 @@ public class AtomServiceImplTest {
 
     @Mock
     FeedBuilder feedBuilder;
+
+    @Mock
+    EntryBuilder entryBuilder;
+
     private AtomServiceImpl atomService;
 
     @Before
@@ -45,6 +51,7 @@ public class AtomServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         atomService = new AtomServiceImpl();
+        atomService.setEntryBuilder(entryBuilder);
         atomService.setFeedBuilder(feedBuilder);
         atomService.setMarshaller(marshaller);
     }
@@ -66,7 +73,7 @@ public class AtomServiceImplTest {
         EntryType entry = new EntryType();
         UsagePoint usagePoint = EspiFactory.newUsagePoint();
 
-        when(feedBuilder.buildEntry(usagePoint)).thenReturn(entry);
+        when(entryBuilder.build(usagePoint)).thenReturn(entry);
 
         atomService.entryFor(usagePoint);
 

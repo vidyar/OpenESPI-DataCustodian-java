@@ -3,9 +3,13 @@ package org.energyos.espi.datacustodian.domain;
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.atom.XMLTest;
 import org.energyos.espi.datacustodian.models.atom.adapters.IntervalBlockAdapter;
-import org.energyos.espi.datacustodian.utils.EspiMarshaller;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBElement;
@@ -18,27 +22,39 @@ import static org.energyos.espi.datacustodian.support.TestUtils.assertAnnotation
 import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newIntervalBlockWithUsagePoint;
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/spring/test-context.xml")
 public class IntervalBlockTests extends XMLTest {
     static final String XML_INPUT =
-            "<IntervalBlock xmlns=\"http://naesb.org/espi\">" +
-                "<interval>" +
-                    "<duration>3</duration>" +
-                    "<start>4</start>" +
-                "</interval>" +
-                "<IntervalReading></IntervalReading>" +
-                "<IntervalReading></IntervalReading>" +
-            "</IntervalBlock>";
-
+            "<espi:IntervalBlock xmlns:espi=\"http://naesb.org/espi\">" +
+                "<espi:interval>" +
+                    "<espi:duration>3</espi:duration>" +
+                    "<espi:start>4</espi:start>" +
+                "</espi:interval>" +
+                "<espi:IntervalReading></espi:IntervalReading>" +
+                "<espi:IntervalReading></espi:IntervalReading>" +
+            "</espi:IntervalBlock>";
+    @Autowired
+    XMLMarshaller xmlMarshaller;
     private IntervalBlock intervalBlock;
     private  String xml;
 
     @Before
     public void before() throws Exception {
-        xml = EspiMarshaller.marshal(newIntervalBlockWithUsagePoint());
+        xml = xmlMarshaller.marshal(newIntervalBlockWithUsagePoint());
 
+        intervalBlock = xmlMarshaller.unmarshal(XML_INPUT, IntervalBlock.class);
+        callAdapterOnRootElement();
+    }
+
+    private void callAdapterOnRootElement() throws Exception {
+        // JAXB doesn't seem to call XMLTypeAdapters for the root element.
+        // Therefore, we're calling it manually.
+        // The best resource we could find: https://java.net/jira/browse/JAXB-117
+        // IZ/BK 11/04/2013
         IntervalBlockAdapter intervalBlockAdapter = new IntervalBlockAdapter();
-        JAXBElement<IntervalBlock> intervalBlockJAXBElement = EspiMarshaller.unmarshal(XML_INPUT);
-        intervalBlock = intervalBlockAdapter.unmarshal(intervalBlockJAXBElement);
+        JAXBElement<IntervalBlock> jaxbElement = new ObjectFactory().createIntervalBlock(intervalBlock);
+        intervalBlock = intervalBlockAdapter.unmarshal(jaxbElement);
     }
 
     @Test

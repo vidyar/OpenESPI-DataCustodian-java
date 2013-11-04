@@ -4,7 +4,7 @@ import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
 import org.energyos.espi.datacustodian.utils.DateConverter;
-import org.energyos.espi.datacustodian.web.api.FeedBuilder;
+import org.energyos.espi.datacustodian.utils.FeedBuilder;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.util.*;

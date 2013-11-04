@@ -1,4 +1,4 @@
-package org.energyos.espi.datacustodian.web.api.impl;
+package org.energyos.espi.datacustodian.service.impl;
 /*
  * Copyright 2013 EnergyOS.org
  *
@@ -17,8 +17,9 @@ package org.energyos.espi.datacustodian.web.api.impl;
 
 import com.sun.syndication.io.FeedException;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
-import org.energyos.espi.datacustodian.web.api.AtomService;
-import org.energyos.espi.datacustodian.web.api.FeedBuilder;
+import org.energyos.espi.datacustodian.service.AtomService;
+import org.energyos.espi.datacustodian.utils.EntryBuilder;
+import org.energyos.espi.datacustodian.utils.FeedBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -38,6 +39,9 @@ public class AtomServiceImpl implements AtomService {
     @Autowired
     private FeedBuilder feedBuilder;
 
+    @Autowired
+    private EntryBuilder entryBuilder;
+
     @Override
     public String feedFor(List<UsagePoint> usagePointList) throws FeedException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -48,8 +52,12 @@ public class AtomServiceImpl implements AtomService {
     @Override
     public String entryFor(UsagePoint usagePoint) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        marshaller.marshal(feedBuilder.buildEntry(usagePoint), new StreamResult(os));
+        marshaller.marshal(entryBuilder.build(usagePoint), new StreamResult(os));
         return os.toString();
+    }
+
+    public void setEntryBuilder(EntryBuilder entryBuilder) {
+        this.entryBuilder = entryBuilder;
     }
 
     public void setFeedBuilder(FeedBuilder feedBuilder) {

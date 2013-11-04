@@ -19,9 +19,13 @@ package org.energyos.espi.datacustodian.domain;
 import com.sun.syndication.io.FeedException;
 import org.custommonkey.xmlunit.exceptions.XpathException;
 import org.energyos.espi.datacustodian.atom.XMLTest;
-import org.energyos.espi.datacustodian.utils.EspiMarshaller;
+import org.energyos.espi.datacustodian.utils.XMLMarshaller;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBException;
@@ -33,6 +37,8 @@ import static org.energyos.espi.datacustodian.support.TestUtils.assertAnnotation
 import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newElectricPowerUsageSummaryWithUsagePoint;
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/spring/test-context.xml")
 public class ElectricPowerUsageSummaryTests extends XMLTest {
 
     private String xml;
@@ -110,10 +116,13 @@ public class ElectricPowerUsageSummaryTests extends XMLTest {
 
     private ElectricPowerUsageSummary electricPowerUsageSummary;
 
+    @Autowired
+    XMLMarshaller xmlMarshaller;
+
     @Before
     public void before() throws JAXBException, FeedException {
-        xml = EspiMarshaller.marshal(newElectricPowerUsageSummaryWithUsagePoint());
-        electricPowerUsageSummary = EspiMarshaller.<ElectricPowerUsageSummary>unmarshal(XML_INPUT).getValue();
+        xml = xmlMarshaller.marshal(newElectricPowerUsageSummaryWithUsagePoint());
+        electricPowerUsageSummary = xmlMarshaller.unmarshal(XML_INPUT, ElectricPowerUsageSummary.class);
     }
 
     @Test
