@@ -144,4 +144,14 @@ public class APISteps {
 
         assertThat(getXPathValue("/:feed/:entry/:link[@rel='self']/@href", xml), is(not("RetailCustomer/" + CucumberSession.getUserHashedId() + "/UsagePoint/" + CucumberSession.getUsagePointHashedId())));
     }
+
+    @When("^I request an Interval Block using the REST API$")
+    public void I_request_an_Interval_Block_using_the_REST_API() throws Throwable {
+        driver.get(StepUtils.BASE_URL + Routes.newDataCustodianRESTIntervalBlockMember(CucumberSession.getUserHashedId(), CucumberSession.getUsagePointHashedId(), "1", "2"));
+    }
+
+    @Then("^I should receive the Interval Block$")
+    public void I_should_receive_the_Interval_Block() throws Throwable {
+        assertXpathExists("/:entry/:content/espi:IntervalBlock", driver.getPageSource());
+    }
 }

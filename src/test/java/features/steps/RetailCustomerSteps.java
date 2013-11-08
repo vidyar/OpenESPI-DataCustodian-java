@@ -216,4 +216,5 @@ public class RetailCustomerSteps {
         assertXpathValue("DST For North America", "/:feed/:entry/:content/espi:LocalTimeParameters/../../:title", xmlResult);
         assertXpathValue("360E2000", "/:feed/:entry/:content/espi:LocalTimeParameters/espi:dstStartRule", xmlResult);
     }
+
 }

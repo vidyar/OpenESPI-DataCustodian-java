@@ -22,4 +22,9 @@ public class IntervalBlockServiceImpl implements IntervalBlockService {
     public void setRepository(IntervalBlockRepository repository) {
         this.repository = repository;
     }
+
+    @Override
+    public IntervalBlock findByHashedId(String hashedId) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

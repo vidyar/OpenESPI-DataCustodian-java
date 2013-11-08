@@ -14,6 +14,9 @@ public class Routes {
     public static final String DataCustodianRESTUsagePointMember = "/espi/1_1/resource/RetailCustomer/{retailCustomerHashedId}/UsagePoint/{usagePointHashedId}";
     public static final String DataCustodianRESTUsagePointUpdate = "/espi/1_1/resource/RetailCustomer/{retailCustomerHashedId}/UsagePoint/{usagePointHashedId}";
     public static final String DataCustodianRESTUsagePointDelete = "/espi/1_1/resource/RetailCustomer/{retailCustomerHashedId}/UsagePoint/{usagePointHashedId}";
+
+    public static final String DataCustodianRESTIntervalBlockMember = "/espi/1_1/resource/RetailCustomer/{RetailCustomerID}/UsagePoint/{UsagePointID}/MeterReading/{MeterReadingID}/IntervalBlock/{IntervalBlockID}";
+
     public static final String DataCustodianSubscription = "/espi/1_1/resource/Subscription/{subscriptionHashedId}";
 
     public static String newDataCustodianRESTUsagePointCollection(String retailCustomerHashedId) {
@@ -26,6 +29,14 @@ public class Routes {
 
     public static String newDataCustodianSubscription(String subscriptionHashedId) {
         return DataCustodianSubscription.replace("{subscriptionHashedId}", subscriptionHashedId);
+    }
+
+    public static String newDataCustodianRESTIntervalBlockMember(String retailCustomerHashedId, String usagePointHashedId, String meterReadingId, String intervalBlockId) {
+        return DataCustodianRESTUsagePointMember
+                .replace("{retailCustomerHashedId}", retailCustomerHashedId)
+                .replace("{usagePointHashedId}", usagePointHashedId)
+                .replace("{meterReadingId}", meterReadingId)
+                .replace("{intervalBlockId}", intervalBlockId);
     }
 }
 

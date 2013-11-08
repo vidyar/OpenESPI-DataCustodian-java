@@ -32,3 +32,10 @@ Feature: API
     Given a Retail Customer with Usage Points
     And I DELETE /espi/1_1/resource/RetailCustomer/{RetailCustomerID}/UsagePoint/{UsagePointID}
     Then the Usage Point should be deleted
+
+  Scenario: API client reads an Interval Block
+    Given a Retail Customer with Interval Blocks
+
+    When I log in as Retail Customer
+    And I request an Interval Block using the REST API
+    Then I should receive the Interval Block

@@ -9,4 +9,6 @@ public interface IntervalBlockService {
     List<IntervalBlock> findAllByMeterReadingId(Long meterReadingId);
 
     void setRepository(IntervalBlockRepository repository);
+
+    IntervalBlock findByHashedId(String hashedId);
 }

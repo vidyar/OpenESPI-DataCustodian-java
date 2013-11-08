@@ -131,6 +131,11 @@ public class DataCustodianSteps {
         CucumberSession.setUsagePointHashedId(StepUtils.getFirstUsagePointHashedId());
     }
 
+    @Given("^a Retail Customer with Interval Blocks$")
+    public void a_Retail_Customer_with_Interval_Blocks() throws Throwable {
+        a_Retail_Customer_with_Usage_Points();
+    }
+
     @And("^I associate \"([^\"]*)\" Usage Point with Retail Customer$")
     public void I_associate_Usage_Point_with_Retail_Customer(String usagePointDescription) throws Throwable {
         navigateTo("/custodian/retailcustomers");

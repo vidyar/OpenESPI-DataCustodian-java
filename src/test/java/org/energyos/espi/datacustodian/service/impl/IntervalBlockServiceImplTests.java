@@ -17,22 +17,37 @@
 package org.energyos.espi.datacustodian.service.impl;
 
 
+import org.energyos.espi.datacustodian.BaseTest;
 import org.energyos.espi.datacustodian.repositories.IntervalBlockRepository;
 import org.energyos.espi.datacustodian.service.IntervalBlockService;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class IntervalBlockServiceImplTests {
+public class IntervalBlockServiceImplTests extends BaseTest {
+
+    private IntervalBlockService service;
+    @Mock
+    private IntervalBlockRepository repository;
+
+    @Before
+    public void setUp() throws Exception {
+        service = new IntervalBlockServiceImpl();
+        service.setRepository(repository);
+    }
 
     @Test
     public void findAllByMeterReading_returnsIntervalBlocks() {
-        IntervalBlockRepository repository = mock(IntervalBlockRepository.class);
-        IntervalBlockService service = new IntervalBlockServiceImpl();
-        service.setRepository(repository);
-
         service.findAllByMeterReadingId(1L);
+
+        verify(repository).findAllByMeterReadingId(1L);
+    }
+
+    @Test
+    public void findByHashedId() {
+        service.findByHashedId("foo-bar-id");
 
         verify(repository).findAllByMeterReadingId(1L);
     }
