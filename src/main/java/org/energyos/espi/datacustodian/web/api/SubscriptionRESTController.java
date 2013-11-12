@@ -16,7 +16,7 @@ package org.energyos.espi.datacustodian.web.api;
  */
 
 import com.sun.syndication.io.FeedException;
-import org.energyos.espi.common.domain.Routes;
+import org.energyos.espi.datacustodian.domain.Routes;
 import org.energyos.espi.datacustodian.domain.Subscription;
 import org.energyos.espi.datacustodian.service.SubscriptionService;
 import org.energyos.espi.datacustodian.service.UsagePointService;

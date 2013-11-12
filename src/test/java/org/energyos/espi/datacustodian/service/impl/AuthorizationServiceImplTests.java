@@ -19,7 +19,7 @@ package org.energyos.espi.datacustodian.service.impl;
 
 import org.energyos.espi.datacustodian.BaseTest;
 import org.energyos.espi.datacustodian.domain.Authorization;
-import org.energyos.espi.common.domain.Routes;
+import org.energyos.espi.datacustodian.domain.Routes;
 import org.energyos.espi.datacustodian.domain.Subscription;
 import org.energyos.espi.datacustodian.repositories.AuthorizationRepository;
 import org.energyos.espi.datacustodian.utils.factories.EspiFactory;

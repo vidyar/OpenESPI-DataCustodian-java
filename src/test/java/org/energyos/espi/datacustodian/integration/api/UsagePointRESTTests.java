@@ -1,7 +1,7 @@
 package org.energyos.espi.datacustodian.integration.api;
 
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
-import org.energyos.espi.common.domain.Routes;
+import org.energyos.espi.datacustodian.domain.Routes;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
 import org.energyos.espi.datacustodian.repositories.UsagePointRepository;
 import org.energyos.espi.datacustodian.service.RetailCustomerService;

@@ -5,7 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.custommonkey.xmlunit.exceptions.XpathException;
-import org.energyos.espi.common.domain.Routes;
+import org.energyos.espi.datacustodian.domain.Routes;
 import org.openqa.selenium.WebDriver;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
