@@ -21,7 +21,7 @@ import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.ThirdParty;
 import org.energyos.espi.datacustodian.oauth.EspiTokenEnhancer;
 import org.energyos.espi.datacustodian.service.RetailCustomerService;
-import org.energyos.espi.datacustodian.utils.factories.EspiPersistenceFactory;
+import org.energyos.espi.datacustodian.test.EspiPersistenceFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,8 +36,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.energyos.espi.datacustodian.test.EspiFactory.newOAuth2Request;
-import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -2,8 +2,8 @@ package org.energyos.espi.datacustodian.integration.api;
 
 import org.energyos.espi.datacustodian.domain.Routes;
 import org.energyos.espi.datacustodian.domain.Subscription;
+import org.energyos.espi.datacustodian.test.EspiPersistenceFactory;
 import org.energyos.espi.datacustodian.test.TestUtils;
-import org.energyos.espi.datacustodian.utils.factories.EspiPersistenceFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
