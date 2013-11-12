@@ -18,7 +18,7 @@ package org.energyos.espi.datacustodian.web.api.impl;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
 import org.energyos.espi.datacustodian.models.atom.EntryType;
 import org.energyos.espi.datacustodian.models.atom.FeedType;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
+import org.energyos.espi.datacustodian.test.EspiFactory;
 import org.energyos.espi.datacustodian.web.api.FeedBuilder;
 import org.junit.Before;
 import org.junit.Test;

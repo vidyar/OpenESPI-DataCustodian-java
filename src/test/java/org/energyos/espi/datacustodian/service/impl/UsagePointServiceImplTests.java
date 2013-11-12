@@ -28,7 +28,7 @@ import org.energyos.espi.datacustodian.utils.ATOMMarshaller;
 import org.energyos.espi.datacustodian.utils.SubscriptionBuilder;
 import org.energyos.espi.datacustodian.utils.UsagePointBuilder;
 import org.energyos.espi.datacustodian.utils.XMLMarshaller;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
+import org.energyos.espi.datacustodian.test.EspiFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,8 +38,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newSubscription;
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newUsagePoint;
+import static org.energyos.espi.datacustodian.test.EspiFactory.newSubscription;
+import static org.energyos.espi.datacustodian.test.EspiFactory.newUsagePoint;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;

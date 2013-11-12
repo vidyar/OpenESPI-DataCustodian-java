@@ -24,7 +24,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newUsagePoint;
+import static org.energyos.espi.datacustodian.test.EspiFactory.newUsagePoint;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 

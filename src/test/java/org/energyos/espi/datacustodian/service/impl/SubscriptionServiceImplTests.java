@@ -32,7 +32,7 @@ import org.springframework.security.oauth2.provider.OAuth2Request;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.*;
+import static org.energyos.espi.datacustodian.test.EspiFactory.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;

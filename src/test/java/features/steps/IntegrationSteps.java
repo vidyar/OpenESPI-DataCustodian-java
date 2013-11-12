@@ -6,9 +6,8 @@ import cucumber.api.java.en.When;
 import org.energyos.espi.datacustodian.domain.*;
 import org.energyos.espi.datacustodian.service.RetailCustomerService;
 import org.energyos.espi.datacustodian.service.UsagePointService;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
-import org.energyos.espi.datacustodian.utils.factories.FixtureFactory;
-import org.junit.BeforeClass;
+import org.energyos.espi.datacustodian.test.EspiFactory;
+import org.energyos.espi.datacustodian.test.FixtureFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

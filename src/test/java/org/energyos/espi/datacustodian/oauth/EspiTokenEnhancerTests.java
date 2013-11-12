@@ -22,7 +22,7 @@ import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.Subscription;
 import org.energyos.espi.datacustodian.service.AuthorizationService;
 import org.energyos.espi.datacustodian.service.SubscriptionService;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
+import org.energyos.espi.datacustodian.test.EspiFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

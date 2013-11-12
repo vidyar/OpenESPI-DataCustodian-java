@@ -2,6 +2,7 @@ package org.energyos.espi.datacustodian.utils.factories;
 
 import org.energyos.espi.datacustodian.domain.*;
 import org.energyos.espi.datacustodian.service.*;
+import org.energyos.espi.datacustodian.test.EspiFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

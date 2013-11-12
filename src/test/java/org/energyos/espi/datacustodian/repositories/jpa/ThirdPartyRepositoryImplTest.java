@@ -2,7 +2,7 @@ package org.energyos.espi.datacustodian.repositories.jpa;
 
 import org.energyos.espi.datacustodian.domain.ThirdParty;
 import org.energyos.espi.datacustodian.repositories.ThirdPartyRepository;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
+import org.energyos.espi.datacustodian.test.EspiFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

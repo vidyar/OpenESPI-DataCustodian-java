@@ -19,7 +19,7 @@ package org.energyos.espi.datacustodian.web.customer;
 import org.energyos.espi.datacustodian.domain.Configuration;
 import org.energyos.espi.datacustodian.domain.ThirdParty;
 import org.energyos.espi.datacustodian.service.ThirdPartyService;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
+import org.energyos.espi.datacustodian.test.EspiFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

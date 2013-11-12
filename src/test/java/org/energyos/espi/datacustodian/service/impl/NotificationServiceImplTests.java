@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.web.client.RestTemplate;
 
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newSubscription;
+import static org.energyos.espi.datacustodian.test.EspiFactory.newSubscription;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;

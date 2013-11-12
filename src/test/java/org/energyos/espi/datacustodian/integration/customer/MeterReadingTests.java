@@ -5,7 +5,7 @@ import org.energyos.espi.datacustodian.domain.MeterReading;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.service.MeterReadingService;
 import org.energyos.espi.datacustodian.service.RetailCustomerService;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
+import org.energyos.espi.datacustodian.test.EspiFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

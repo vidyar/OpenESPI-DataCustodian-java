@@ -21,14 +21,14 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.energyos.espi.datacustodian.utils.TestUtils;
+import org.energyos.espi.datacustodian.test.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import static features.steps.StepUtils.*;
-import static org.energyos.espi.datacustodian.support.Asserts.assertXpathValue;
-import static org.hamcrest.CoreMatchers.containsString;
+import static org.energyos.espi.datacustodian.test.Asserts.assertXpathValue;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;

@@ -22,7 +22,7 @@ import org.energyos.espi.datacustodian.domain.Authorization;
 import org.energyos.espi.datacustodian.domain.Routes;
 import org.energyos.espi.datacustodian.domain.Subscription;
 import org.energyos.espi.datacustodian.repositories.AuthorizationRepository;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
+import org.energyos.espi.datacustodian.test.EspiFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

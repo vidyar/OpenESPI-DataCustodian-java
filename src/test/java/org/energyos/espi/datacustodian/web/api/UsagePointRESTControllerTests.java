@@ -21,7 +21,7 @@ import org.energyos.espi.datacustodian.domain.RetailCustomer;
 import org.energyos.espi.datacustodian.domain.UsagePoint;
 import org.energyos.espi.datacustodian.service.RetailCustomerService;
 import org.energyos.espi.datacustodian.service.UsagePointService;
-import org.energyos.espi.datacustodian.utils.factories.EspiFactory;
+import org.energyos.espi.datacustodian.test.EspiFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -34,7 +34,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newUsagePoint;
+import static org.energyos.espi.datacustodian.test.EspiFactory.newUsagePoint;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.*;

@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newSubscription;
+import static org.energyos.espi.datacustodian.test.EspiFactory.newSubscription;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;

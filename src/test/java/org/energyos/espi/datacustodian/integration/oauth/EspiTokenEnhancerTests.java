@@ -35,8 +35,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.energyos.espi.datacustodian.utils.factories.EspiFactory.newOAuth2Request;
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.energyos.espi.datacustodian.test.EspiFactory.newOAuth2Request;
+import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
