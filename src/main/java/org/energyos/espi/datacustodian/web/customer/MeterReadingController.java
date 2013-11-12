@@ -16,7 +16,7 @@
 
 package org.energyos.espi.datacustodian.web.customer;
 
-import org.energyos.espi.common.domain.Routes;
+import org.energyos.espi.datacustodian.domain.Routes;
 import org.energyos.espi.datacustodian.service.MeterReadingService;
 import org.energyos.espi.datacustodian.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;

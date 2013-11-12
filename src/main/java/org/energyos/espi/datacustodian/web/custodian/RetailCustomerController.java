@@ -16,8 +16,8 @@
 
 package org.energyos.espi.datacustodian.web.custodian;
 
-import org.energyos.espi.common.domain.Routes;
 import org.energyos.espi.datacustodian.domain.RetailCustomer;
+import org.energyos.espi.datacustodian.domain.Routes;
 import org.energyos.espi.datacustodian.service.RetailCustomerService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
