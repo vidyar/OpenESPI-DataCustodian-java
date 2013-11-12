@@ -5,7 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.custommonkey.xmlunit.exceptions.XpathException;
-import org.energyos.espi.datacustodian.domain.Routes;
+import org.energyos.espi.common.domain.Routes;
 import org.openqa.selenium.WebDriver;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import static features.steps.StepUtils.assertContains;
 import static features.steps.StepUtils.clickLinkByText;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
-import static org.energyos.espi.datacustodian.test.TestUtils.getXPathValue;
+import static org.energyos.espi.common.test.TestUtils.getXPathValue;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 

@@ -16,7 +16,7 @@
 
 package org.energyos.espi.datacustodian.web.customer;
 
-import org.energyos.espi.datacustodian.domain.Routes;
+import org.energyos.espi.common.domain.Routes;
 import org.energyos.espi.datacustodian.web.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

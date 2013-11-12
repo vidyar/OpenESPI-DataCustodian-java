@@ -1,14 +1,14 @@
 package org.energyos.espi.datacustodian.integration.api;
 
-import org.energyos.espi.datacustodian.domain.RetailCustomer;
-import org.energyos.espi.datacustodian.domain.Routes;
-import org.energyos.espi.datacustodian.domain.UsagePoint;
-import org.energyos.espi.datacustodian.repositories.UsagePointRepository;
-import org.energyos.espi.datacustodian.service.RetailCustomerService;
-import org.energyos.espi.datacustodian.service.UsagePointService;
-import org.energyos.espi.datacustodian.test.EspiFactory;
-import org.energyos.espi.datacustodian.test.EspiPersistenceFactory;
-import org.energyos.espi.datacustodian.test.TestUtils;
+import org.energyos.espi.common.domain.RetailCustomer;
+import org.energyos.espi.common.domain.Routes;
+import org.energyos.espi.common.domain.UsagePoint;
+import org.energyos.espi.common.repositories.UsagePointRepository;
+import org.energyos.espi.common.service.RetailCustomerService;
+import org.energyos.espi.common.service.UsagePointService;
+import org.energyos.espi.common.test.EspiFactory;
+import org.energyos.espi.common.test.EspiPersistenceFactory;
+import org.energyos.espi.common.test.TestUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

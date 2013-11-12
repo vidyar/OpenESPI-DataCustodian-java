@@ -20,12 +20,12 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.energyos.espi.datacustodian.test.TestUtils;
+import org.energyos.espi.common.test.TestUtils;
 import org.openqa.selenium.WebDriver;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
-import static org.energyos.espi.datacustodian.test.Asserts.assertXpathValue;
+import static org.energyos.espi.common.test.Asserts.assertXpathValue;
 
 public class UsagePointSteps {
 

@@ -1,6 +1,6 @@
 package org.energyos.espi.datacustodian.oauth;
 
-import org.energyos.espi.datacustodian.domain.Routes;
+import org.energyos.espi.common.domain.Routes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.ClientDetails;
