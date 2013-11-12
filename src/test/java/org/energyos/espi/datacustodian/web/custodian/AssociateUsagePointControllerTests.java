@@ -55,7 +55,7 @@ public class AssociateUsagePointControllerTests {
         when(bindingResult.hasErrors()).thenReturn(true);
 
         String route = controller.create(null, null, bindingResult);
-        assertThat(route, is(Routes.CUSTODIAN_RETAIL_CUSTOMERS_USAGE_POINTS_FORM));
+        assertThat(route, is(Routes.DATA_CUSTODIAN_RETAIL_CUSTOMERS_USAGE_POINTS_FORM));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class AssociateUsagePointControllerTests {
         long retailCustomerId = 5;
 
         String route = controller.create(retailCustomerId, newUsagePointForm(), bindingResult);
-        assertThat(route, is("redirect:" + Routes.CUSTODIAN_RETAIL_CUSTOMERS));
+        assertThat(route, is("redirect:" + Routes.DATA_CUSTODIAN_RETAIL_CUSTOMERS));
     }
 
 

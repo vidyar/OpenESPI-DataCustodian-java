@@ -17,6 +17,7 @@
 package org.energyos.espi.datacustodian.web.webservice;
 
 import com.sun.syndication.io.FeedException;
+import org.energyos.espi.common.domain.Routes;
 import org.energyos.espi.datacustodian.service.RetailCustomerService;
 import org.energyos.espi.datacustodian.service.UsagePointService;
 import org.energyos.espi.datacustodian.web.BaseController;
@@ -31,7 +32,7 @@ import java.io.IOException;
 import java.security.Principal;
 
 @Controller("apiController")
-@RequestMapping("/api/")
+@RequestMapping(Routes.DATA_CUSTODIAN_API)
 public class APIController extends BaseController {
 
     @Autowired

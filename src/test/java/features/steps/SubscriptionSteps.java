@@ -15,7 +15,7 @@ public class SubscriptionSteps {
     public void an_authorized_Third_Party() throws Throwable {
     }
 
-    @When("^I access the Usage Points API$")
+    @When("^I access the Usage Points DATA_CUSTODIAN_API$")
     public void I_access_the_Usage_Points_API() throws Throwable {
         driver.get(StepUtils.BASE_URL + "/api/feed");
     }

@@ -21,6 +21,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.energyos.espi.common.domain.Routes;
 import org.energyos.espi.datacustodian.utils.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,9 +30,7 @@ import org.openqa.selenium.WebElement;
 import static features.steps.StepUtils.*;
 import static org.energyos.espi.datacustodian.support.Asserts.assertXpathValue;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class RetailCustomerSteps {
 
@@ -221,7 +220,7 @@ public class RetailCustomerSteps {
 
     @When("^I attempt to view custodian/home$")
     public void I_attempt_to_view_custodian_home() throws Throwable {
-        navigateTo("/custodian/home");
+        navigateTo(Routes.DATA_CUSTODIAN_HOME);
     }
 
     @Then("^I should see an unauthorized screen$")

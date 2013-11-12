@@ -16,6 +16,7 @@
 
 package org.energyos.espi.datacustodian.web.custodian;
 
+import org.energyos.espi.common.domain.Routes;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -25,6 +26,6 @@ public class CustodianHomeControllerTests {
     @Test
     public void index_displaysCustodianHomeView() throws Exception {
         CustodianHomeController controller = new CustodianHomeController();
-        assertEquals("/custodian/home", controller.index());
+        assertEquals(Routes.DATA_CUSTODIAN_HOME, controller.index());
     }
 }

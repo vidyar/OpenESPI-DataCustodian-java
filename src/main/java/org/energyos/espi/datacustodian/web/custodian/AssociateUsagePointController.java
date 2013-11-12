@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/custodian/retailcustomers")
+@RequestMapping(Routes.DATA_CUSTODIAN_RETAIL_CUSTOMERS)
 @PreAuthorize("hasRole('ROLE_CUSTODIAN')")
 public class AssociateUsagePointController {
 
@@ -41,13 +41,13 @@ public class AssociateUsagePointController {
         model.put("usagePointForm", new UsagePointForm());
         model.put("retailCustomerId", retailCustomerId);
 
-        return Routes.CUSTODIAN_RETAIL_CUSTOMERS_USAGE_POINTS_FORM;
+        return Routes.DATA_CUSTODIAN_RETAIL_CUSTOMERS_USAGE_POINTS_FORM;
     }
 
     @RequestMapping(value = "/{retailCustomerId}/usagepoints/create", method = RequestMethod.POST)
     public String create(@PathVariable Long retailCustomerId, @ModelAttribute("usagePointForm") @Valid UsagePointForm usagePointForm, BindingResult result) {
         if (result.hasErrors())
-            return Routes.CUSTODIAN_RETAIL_CUSTOMERS_USAGE_POINTS_FORM;
+            return Routes.DATA_CUSTODIAN_RETAIL_CUSTOMERS_USAGE_POINTS_FORM;
 
         UsagePoint usagePoint = new UsagePoint();
         usagePoint.setUUID(UUID.fromString(usagePointForm.getUUID()));
@@ -58,7 +58,7 @@ public class AssociateUsagePointController {
         usagePoint.setRetailCustomer(retailCustomer);
         service.createOrReplaceByUUID(usagePoint);
 
-        return "redirect:" + Routes.CUSTODIAN_RETAIL_CUSTOMERS;
+        return "redirect:" + Routes.DATA_CUSTODIAN_RETAIL_CUSTOMERS;
     }
 
     public void setRetailCustomerService(RetailCustomerService retailCustomerService) {

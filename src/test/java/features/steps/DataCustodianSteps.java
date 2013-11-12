@@ -21,6 +21,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.energyos.espi.common.domain.Routes;
 import org.openqa.selenium.WebDriver;
 
 import java.util.UUID;
@@ -66,7 +67,7 @@ public class DataCustodianSteps {
 
     @Then("^I should see Data Custodian home page$")
     public void I_should_see_Data_Custodian_home_page() throws Throwable {
-        assertTrue(driver.getCurrentUrl().endsWith("/custodian/home"));
+        assertTrue(driver.getCurrentUrl().endsWith(Routes.DATA_CUSTODIAN_HOME));
         assertTrue(driver.getPageSource().contains("Welcome Data Custodian"));
     }
 

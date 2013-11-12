@@ -16,6 +16,7 @@
 
 package org.energyos.espi.datacustodian.web.custodian;
 
+import org.energyos.espi.common.domain.Routes;
 import org.energyos.espi.datacustodian.service.UsagePointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/custodian/")
+@RequestMapping(Routes.DATA_CUSTODIAN_ROOT)
 public class UploadController {
 
     @Autowired

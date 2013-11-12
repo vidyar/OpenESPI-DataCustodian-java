@@ -16,6 +16,7 @@
 
 package org.energyos.espi.datacustodian.integration.custodian;
 
+import org.energyos.espi.common.domain.Routes;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -139,14 +140,14 @@ public class DataCustodianTests {
 
     @Test
     public void home_returnsOkStatus() throws Exception {
-        mockMvc.perform(get("/custodian/home"))
+        mockMvc.perform(get(Routes.DATA_CUSTODIAN_HOME))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void home_displaysHomeView() throws Exception {
-        mockMvc.perform(get("/custodian/home"))
-                .andExpect(view().name("/custodian/home"));
+        mockMvc.perform(get(Routes.DATA_CUSTODIAN_HOME))
+                .andExpect(view().name(Routes.DATA_CUSTODIAN_HOME));
     }
 
     @Test
