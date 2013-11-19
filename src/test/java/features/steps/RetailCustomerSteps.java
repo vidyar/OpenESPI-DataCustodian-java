@@ -130,7 +130,7 @@ public class RetailCustomerSteps {
     @Then("^the XML includes Electric Power Usage Summary$")
     public void the_XML_includes_Electric_Power_Usage_Summary() throws Throwable {
         assertXpathValue("Usage Summary", "/:feed/:entry/:content/espi:ElectricPowerUsageSummary/../../:title", xmlResult);
-        assertXpathValue("1119600", "/:feed/:entry[5]/:content/espi:ElectricPowerUsageSummary/espi:billingPeriod/espi:duration", xmlResult);
+        assertXpathValue("1119600", "//:content/espi:ElectricPowerUsageSummary/espi:billingPeriod/espi:duration", xmlResult);
     }
 
     @Then("^the XML includes Interval Blocks$")
@@ -210,7 +210,7 @@ public class RetailCustomerSteps {
     @Then("^the XML includes Electric Power Quality Summary$")
     public void the_XML_includes_Electric_Power_Quality_Summary() throws Throwable {
         assertXpathValue("Quality Summary", "/:feed/:entry/:content/espi:ElectricPowerQualitySummary/../../:title", xmlResult);
-        assertXpathValue("2119600", "/:feed/:entry[6]/:content/espi:ElectricPowerQualitySummary/espi:summaryInterval/espi:duration", xmlResult);
+        assertXpathValue("2119600", "//:content/espi:ElectricPowerQualitySummary/espi:summaryInterval/espi:duration", xmlResult);
     }
 
     @Then("^the XML includes Local Time Parameters$")

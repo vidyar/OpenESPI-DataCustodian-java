@@ -95,7 +95,7 @@ public class UsagePoint
     public static final String QUERY_FIND_BY_UUID = "UsagePoint.findByUUID";
     public static final String QUERY_FIND_BY_ID = "UsagePoint.findById";
     public static final String QUERY_FIND_ALL_UPDATED_FOR = "UsagePoint.findAllUpdatedFor";
-    public static final String QUERY_FIND_BY_RELATED_HREF = "UsagePoint.findByRelatedHref";
+    public static final String QUERY_FIND_BY_RELATED_HREF = "UsagePoint.findByAllParentsHref";
     public static final String QUERY_FIND_ALL_RELATED = "UsagePoint.findAllRelated";
 
     @XmlElement(type = String.class)
@@ -129,7 +129,7 @@ public class UsagePoint
     private List<ElectricPowerQualitySummary> electricPowerQualitySummaries = new ArrayList<>();
 
     @XmlTransient
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "local_time_parameters_id")
     private TimeConfiguration localTimeParameters;
 
@@ -143,10 +143,6 @@ public class UsagePoint
     @LazyCollection(LazyCollectionOption.FALSE)
     @CollectionTable(name="usage_point_related_links", joinColumns=@JoinColumn(name="usage_point_id"))
     private List<LinkType> relatedLinks = new ArrayList<>();
-
-    @XmlTransient
-    @Embedded
-    private LinkType upLink;
 
     public void addMeterReading(MeterReading meterReading)
     {
@@ -336,7 +332,7 @@ public class UsagePoint
     }
 
     @Override
-    public String getRelatedLinkQuery() {
+    public String getParentQuery() {
         return QUERY_FIND_BY_RELATED_HREF;
     }
 
@@ -346,19 +342,14 @@ public class UsagePoint
     }
 
     @Override
-    public List<String> getRelatedLinkHrefs() {
-        List<String> hrefs = new ArrayList<>();
-        for(LinkType link : getRelatedLinks()) {
-            hrefs.add(link.getHref());
-        }
-        return hrefs;
-    }
-
-    public LinkType getUpLink() {
-        return upLink;
-    }
-
-    public void setUpLink(LinkType upLink) {
-        this.upLink = upLink;
+    public void merge(IdentifiedObject resource) {
+        UsagePoint newUsagePoint = (UsagePoint)resource;
+        this.setSelfLink(newUsagePoint.getSelfLink());
+        this.setUpLink(newUsagePoint.getUpLink());
+        this.setRelatedLinks(newUsagePoint.getRelatedLinks());
+        this.setDescription(newUsagePoint.getDescription());
+        this.setUpdated(newUsagePoint.getUpdated());
+        this.setPublished(newUsagePoint.getPublished());
+        this.setServiceCategory(newUsagePoint.getServiceCategory());
     }
 }
