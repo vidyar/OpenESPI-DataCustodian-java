@@ -17,9 +17,6 @@ package org.energyos.espi.datacustodian.web.api;
 
 import com.sun.syndication.io.FeedException;
 import org.energyos.espi.common.domain.Routes;
-import org.energyos.espi.common.domain.Subscription;
-import org.energyos.espi.common.service.SubscriptionService;
-import org.energyos.espi.common.service.UsagePointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,27 +33,28 @@ import java.io.IOException;
 public class SubscriptionRESTController {
 
     @Autowired
-    private SubscriptionService subscriptionService;
-
+    private ExportWriter writer;
     @Autowired
-    private UsagePointService usagePointService;
+    private ExportService exportService;
 
     @RequestMapping(value = Routes.DATA_CUSTODIAN_SUBSCRIPTION, method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public void show(HttpServletResponse response, @PathVariable String subscriptionHashedId) throws FeedException, IOException {
-        Subscription subscription = subscriptionService.findByHashedId(subscriptionHashedId);
-        String xml = usagePointService.exportUsagePoints(subscription.getRetailCustomer());
+    public void show(HttpServletResponse response, @PathVariable String subscriptionHashedId) throws FeedException, IOException, InterruptedException {
+        EntryTypeIterator entries = exportService.findAllForHashedId(subscriptionHashedId);
+        writer.setOutputStream(response.getOutputStream());
 
         response.setContentType(MediaType.APPLICATION_ATOM_XML_VALUE);
-        response.getWriter().print(xml);
 
+        while(entries.hasNext()) {
+            writer.write(entries.next());
+        }
     }
 
-    public void setSubscriptionService(SubscriptionService subscriptionService) {
-        this.subscriptionService = subscriptionService;
+    public void setWriter(ExportWriter writer) {
+        this.writer = writer;
     }
 
-    public void setUsagePointService(UsagePointService usagePointService) {
-        this.usagePointService = usagePointService;
+    public void setExportService(ExportService exportService) {
+        this.exportService = exportService;
     }
 }
